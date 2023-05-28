@@ -1,17 +1,11 @@
-
 function Header() {
     return (
-        <div
-            className="text-blue-400
-            text-6xl
-            sm: text-l
-            bg-black 
-            w-98
-            h-20"
-        >
-            One Minute Story
+        <div className="bg-blue-900 h-20 flex items-center justify-center">
+            <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
+                One Minute Story
+            </h1>
         </div>
-    )
+    );
 }
 
-export default Header
+export default Header;
