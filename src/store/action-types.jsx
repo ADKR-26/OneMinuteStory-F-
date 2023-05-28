@@ -1,0 +1,1 @@
+export const GET_STORY_DATA = 'GET+STORY_DATA';
