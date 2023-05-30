@@ -1,11 +1,21 @@
 import axios from "axios";
 
-import { GET_STORY_DATA } from "./action-types";
+import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA } from "./action-types";
 
 export const actionGetStoryData = (data) => ({
     type: GET_STORY_DATA,
     payload: data,
 });
+
+export const actionSetStoryData = (data) => ({
+    type: SET_STORY_DATA,
+    payload: data,
+})
+
+export const actionDeleteStoryData = (data) => ({
+    type: DELETE_STORY_DATA,
+    payload: data,
+})
 
 export function getStoryData() {
     console.log("Working");
@@ -27,4 +37,44 @@ export function getStoryData() {
             console.log(error);
         }
     }
+}
+
+export function setStoryData(storyData) {
+    return (dispatch) => {
+        try {
+            axios.post('http://localhost:8000/addStory', { story: storyData })
+                .then((response) => {
+                    dispatch(actionSetStoryData(response));
+                    console.log("Response", response);
+                })
+                .catch((error) => {
+                    const data = error.response;
+                    dispatch(actionSetStoryData(data));
+                    console.log("Set Story Error", error);
+                })
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function deleteStoryData(id) {
+    return (dispatch) => {
+        try {
+            axios
+                .delete(`http://localhost:8000/deleteStory/${id}`)
+                .then((response) => {
+                    dispatch(actionDeleteStoryData(response.data.deletedStory));
+                    console.log("Response", response.data.deletedStory);
+                })
+                .catch((error) => {
+                    const data = error.response;
+                    dispatch(actionDeleteStoryData(data));
+                    console.log("Delete Story Error", error);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
 }
