@@ -17,10 +17,11 @@ function HomePage() {
 
     useEffect(() => {
         dispatch(getStoryData());
+        console.log("UseEffect");
     }, [story])                     // to be checked with StoryData
 
     const handlePaste = (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
     };
 
     const handleAddStory = () => {
@@ -51,9 +52,19 @@ function HomePage() {
             </div>
 
             <div className="flex justify-center items-center mt-8">
-                <Button type="primary" size="large" onClick={handleAddStory}>
+                {/* <Button type="primary" size="large" onClick={handleAddStory}>
+                    Add Story
+                </Button> */}
+                <Button
+                    type="primary"
+                    size="large"
+                    onClick={handleAddStory}
+                    className="bg-blue-600 hover:bg-blue-500 transition duration-300"
+                >
                     Add Story
                 </Button>
+
+
             </div>
         </div>
     )

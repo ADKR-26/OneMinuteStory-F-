@@ -1,5 +1,5 @@
 import { Card } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, LikeOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { deleteStoryData } from '../../store/action';
 
@@ -27,6 +27,7 @@ function StoryCard({ storyData, id }) {
                 }}
             >
                 <DeleteOutlined className="absolute top-0 right-1 cursor-pointer" onClick={() => deleteStory(id)} />
+                <LikeOutlined className="absolute bottom-1 left-1 cursor-pointer"/>
                 <p className='p-10'> {storyData} </p>
             </Card>
         </div>
