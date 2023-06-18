@@ -1,3 +1,4 @@
 export const GET_STORY_DATA = 'GET+STORY_DATA';
 export const SET_STORY_DATA = 'SET+STORY_DATA';
 export const DELETE_STORY_DATA = 'DELETE_STORY_DATA';
+export const SET_TITLE_ID = "SET_TITLE_ID";

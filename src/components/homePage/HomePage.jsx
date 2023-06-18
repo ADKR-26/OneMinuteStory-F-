@@ -1,4 +1,4 @@
-import StoryCard from "../storyCard/StoryCard"
+import StoryCard from "../Card/StoryCard"
 import { getStoryData, setStoryData } from '../../store/action';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,8 @@ function HomePage() {
     const [story, setStory] = useState('');
 
     const StoryData = useSelector((state) => state?.oneMinuteStory?.storyData);
+
+    console.log("STORY DATA", StoryData)
 
     // console.log("THE DATA", StoryData);
 
@@ -34,7 +36,7 @@ function HomePage() {
     return (
         <div>
             {StoryData.map((data) => {
-                return <StoryCard key={data._id} storyData={data.story} id={data._id} />
+                return <StoryCard key={data._id} storyData={data.story.content} id={data._id} />
             })}
 
             <div className="flex justify-center items-center mt-8">
