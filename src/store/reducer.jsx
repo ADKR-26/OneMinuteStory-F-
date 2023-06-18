@@ -1,9 +1,10 @@
-import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA } from "./action-types";
+import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA, SET_TITLE_ID } from "./action-types";
 
 const initialState = {
     storyData: [],
     addedStory: {},
     deletedStory: {},
+    titleId: null
 }
 
 const storyReducer = (state = initialState, action) => {
@@ -17,6 +18,8 @@ const storyReducer = (state = initialState, action) => {
 
         case DELETE_STORY_DATA:
             return { ...state, deletedStory: action.payload };
+        case SET_TITLE_ID:
+            return { ...state, titleId: action.payload}
 
         default: return state;
     }

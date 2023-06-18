@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA } from "./action-types";
+import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA, SET_TITLE_ID } from "./action-types";
 
 export const actionGetStoryData = (data) => ({
     type: GET_STORY_DATA,
@@ -15,6 +15,12 @@ export const actionSetStoryData = (data) => ({
 export const actionDeleteStoryData = (data) => ({
     type: DELETE_STORY_DATA,
     payload: data,
+})
+
+export const actionSetTitleId = (data) => ({
+    // console.log("DATA", data);
+    type: SET_TITLE_ID,
+    payload: data
 })
 
 export function getStoryData() {
