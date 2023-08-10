@@ -15,7 +15,12 @@ function App() {
     <BrowserRouter>
       <Provider store={store}>
         <Header />
-        <AppRouter />
+        {/* <AppRouter className="pt-20"/> */}
+
+        <div className="pt-20"> {/* Apply padding for content */}
+          <AppRouter />
+        </div>
+
         {/* <HomePage /> */}
 
         {/* <StoryData /> */}
