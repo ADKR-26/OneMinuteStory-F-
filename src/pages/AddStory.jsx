@@ -1,32 +1,61 @@
 import { useState, useEffect } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { useDispatch } from 'react-redux';
+import { setStoryData } from '../store/action';
 
 function AddStory() {
+
+    const dispatch = useDispatch();
+
     const [timer, setTimer] = useState(null);
     const [remainingTime, setRemainingTime] = useState(60);
     const [isTyping, setIsTyping] = useState(false);
-    // const [storyText, setStoryText] = useState('');
+    // const [formData, setFormData] = useState({});
     const [timerStarted, setTimerStarted] = useState(false);
 
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
+        // setFormData(values);
         console.log('Success:', values);
-        // console.log(getFieldsValues(true))
+        const data = {
+            title: values.title,
+            story: [
+                {
+                    content: values.story
+                }
+            ]
+        }
+        dispatch(setStoryData(data.title, data.story))
+        // console.log('FORM DATA:', form.getFieldsValue());
     };
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
-    
+    useEffect(() => {
+        if (remainingTime === 0) {
+            const button = document.getElementById('submit-button');
+            const resetButton = document.getElementById('reset-button');
+            if (button) {
+                button.click();
+            }
+
+            setTimeout(() => {
+                resetButton.click();
+            }, 1000);
+
+        }
+    }, [remainingTime]);
 
     const handleTyping = () => {
         if (!timerStarted) {
             setIsTyping(true);
             setTimerStarted(true);
             setTimer(setTimeout(handleTimeout, 60000));
-            setRemainingTime(10);
+            setRemainingTime(5);
         }
     };
 
@@ -68,6 +97,7 @@ function AddStory() {
 
             <Form
                 name="basic"
+                form={form}
                 labelCol={{
                     span: 8,
                 }}
@@ -139,6 +169,7 @@ function AddStory() {
                         <Button
                             type="primary"
                             htmlType='submit'
+                            id="submit-button"
                             size="large"
                             className="bg-blue-600 hover:bg-blue-500 transition duration-300"
                         >
@@ -149,6 +180,7 @@ function AddStory() {
                         <Button
                             type="primary"
                             size="large"
+                            id="reset-button"
                             htmlType="button"
                             className="bg-blue-600 hover:bg-blue-500 transition duration-300"
                             onClick={resetData}
@@ -157,50 +189,12 @@ function AddStory() {
                         </Button>
                     </div>
                 </Form.Item>
+                <p className="flex justify-center mt-8">
+                    The Story will auto Submit when timer reaches to zero.
+                </p>
             </Form>
 
             {/* FORM END */}
-
-            {/* <TextArea
-                className="w-96 h-48"
-                placeholder="Write Your Story Title Here"
-                autoSize={{
-                    minRows: 2,
-                    maxRows: 10,
-                }}
-            onChange={handleTyping}
-            />
-            <br />
-            <TextArea
-                className="w-96 h-48"
-                placeholder="Enter Your Story Here"
-                autoSize={{
-                    minRows: 2,
-                    maxRows: 10,
-                }}
-                value={storyText}    this is causing some problem to be checked
-                onChange={handleTyping}
-            />
-            <div className="flex justify-center mt-8">
-                <Button
-                    type="primary"
-                    size="large"
-                    className="bg-blue-600 hover:bg-blue-500 transition duration-300"
-                >
-                    Add Story
-                </Button>
-            </div>
-
-            <div className="flex justify-center mt-8">
-                <Button
-                    type="primary"
-                    size="large"
-                    className="bg-blue-600 hover:bg-blue-500 transition duration-300"
-                    onClick={resetData}
-                >
-                    Reset
-                </Button>
-            </div> */}
 
             {/* {isTyping && ( */}
             <div className="mt-4 text-center text-lg font-bold">

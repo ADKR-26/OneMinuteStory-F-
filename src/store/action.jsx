@@ -45,10 +45,11 @@ export function getStoryData() {
     }
 }
 
-export function setStoryData(storyData) {
+export function setStoryData(title, story) {
+    console.log("DATAAAAAA", title, story)
     return (dispatch) => {
         try {
-            axios.post('http://localhost:8000/addStory', { story: storyData })
+            axios.post('http://localhost:8000/addStory', { title, story })
                 .then((response) => {
                     dispatch(actionSetStoryData(response));
                     console.log("Response", response);
