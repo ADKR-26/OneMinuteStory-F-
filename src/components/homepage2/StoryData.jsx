@@ -18,12 +18,14 @@ function StoryData() {
 
     return (
         <div>
-            {
+            { StoryContentData ?
                 StoryContentData.map((data) => {
                     return <StoryCard key={data._id} storyData={data.story[0].content}/>
-                })
+                }) : 
+                <p>
+                    NOT FOUND !!
+                </p>
             }
-
         </div>
     )
 }

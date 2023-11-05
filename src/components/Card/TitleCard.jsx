@@ -1,7 +1,8 @@
 import { Button, Card } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { actionSetTitleId } from '../../store/action';
+import { actionSetTitleId, deleteStoryData } from '../../store/action';
 import { useDispatch } from 'react-redux';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function TitleCard({ titleData, id }) {
 
@@ -9,7 +10,13 @@ function TitleCard({ titleData, id }) {
 
     const setTitleId = () => {
         dispatch(actionSetTitleId(id));
-    }
+        console.log("DATA DELETED");
+    };
+
+    const deleteStory = (id) => {
+        dispatch(deleteStoryData(id));
+        // window.location.reload();          //! will reload re-render when data is deleted
+    };
 
     return (
         <div className="flex justify-center">
@@ -26,6 +33,7 @@ function TitleCard({ titleData, id }) {
                     border: '2px solid rgba(150, 150, 150, 1)'
                 }}
             >
+                <DeleteOutlined className="absolute top-0 right-1 cursor-pointer" onClick={() => deleteStory(id)} />
                 <p className='p-10'> {titleData} </p>
                 <Button
                     onClick={setTitleId}

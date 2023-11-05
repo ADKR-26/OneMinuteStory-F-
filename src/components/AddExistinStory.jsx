@@ -4,15 +4,15 @@ import TextArea from 'antd/es/input/TextArea';
 import { useDispatch } from 'react-redux';
 import { setStoryData } from '../store/action';
 
-function AddStory() {
+function AddExistingStory({title}) {
+
+    // console.log("TITLEEE", title);
 
     const dispatch = useDispatch();
-
-    // const [timer, setTimer] = useState(null);
-    const [remainingTime, setRemainingTime] = useState(5);
+    const setTitle = title;
+    const [timer, setTimer] = useState(null);
+    const [remainingTime, setRemainingTime] = useState(60);
     const [isTyping, setIsTyping] = useState(false);
-    const [titleEntered, setTitleEntered] = useState(true);
-    const [title, setTitle] = useState('');
     // const [formData, setFormData] = useState({});
     const [timerStarted, setTimerStarted] = useState(false);
 
@@ -29,25 +29,14 @@ function AddStory() {
                 }
             ]
         }
-        // setRemainingTime(5);
-        // setTimerStarted(false);
-        setIsTyping(false);
-        resetData();
-        // console.log("FINISH");
-        dispatch(setStoryData(data.title, data.story));
+        dispatch(setStoryData(data.title, data.story))
         // console.log('FORM DATA:', form.getFieldsValue());
-    };
-
-    const handleTitleChange = (e) => {
-        const newTitle = e.target.value;
-        setTitle(newTitle);
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
-    // automatically clicks submit button after time expires and then resets form
     useEffect(() => {
         if (remainingTime === 0) {
             const button = document.getElementById('submit-button');
@@ -59,23 +48,22 @@ function AddStory() {
             setTimeout(() => {
                 resetButton.click();
             }, 1000);
-
         }
     }, [remainingTime]);
 
-    // to check whether the user has started typing his/her story or not
     const handleTyping = () => {
         if (!timerStarted) {
             setIsTyping(true);
             setTimerStarted(true);
-            // setTimer(setTimeout(handleTimeout, 5000));
-            // setRemainingTime(5);
+            setTimer(setTimeout(handleTimeout, 60000));
+            setRemainingTime(5);
         }
     };
 
     const handleTimeout = () => {
         console.log('Timer expired!');
         setIsTyping(false);
+        // Perform any actions you want when the timer expires
     };
 
     if (remainingTime === 0) {
@@ -85,14 +73,10 @@ function AddStory() {
     const resetData = () => {
         setIsTyping(false);
         setTimerStarted(false);
-        // setRemainingTime(5);
+        setRemainingTime(60);
         // setStoryText('')
-        setTimeout(() => {
-            setRemainingTime(5);
-            form.resetFields();
-        }, 3000);
-        // form.resetFields();
-    };
+        form.resetFields();
+    }
 
     useEffect(() => {
         if (remainingTime > 0 && isTyping) {
@@ -108,9 +92,6 @@ function AddStory() {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-
-            <h4> Timer will start as soon as you starts typing your story</h4>
-
             <h2 className="text-2xl font-bold mb-4">Add New Story</h2>
 
             {/* FORM */}
@@ -147,12 +128,14 @@ function AddStory() {
                     {/* <Input /> */}
                     <TextArea
                         className="w-96 h-48"
-                        placeholder="Please enter your title here!"
+                        // placeholder="Please enter your title here!"
                         autoSize={{
                             minRows: 2,
                             maxRows: 10,
                         }}
-                        onChange={handleTitleChange}
+                        // disabled
+                        defaultValue={setTitle}
+                    // onChange={handleTyping}
                     />
                 </Form.Item>
 
@@ -170,7 +153,6 @@ function AddStory() {
                     <TextArea
                         className="w-96 h-48"
                         placeholder="Enter Your Story Here"
-                        disabled={title === ''}
                         autoSize={{
                             minRows: 2,
                             maxRows: 10,
@@ -194,7 +176,7 @@ function AddStory() {
                             size="large"
                             className="bg-blue-600 hover:bg-blue-500 transition duration-300"
                         >
-                            Add Story, button to be removed
+                            Add Story
                         </Button>
                     </div>
                     <div className="flex justify-center mt-8">
@@ -233,4 +215,4 @@ function AddStory() {
     );
 }
 
-export default AddStory;
+export default AddExistingStory;
