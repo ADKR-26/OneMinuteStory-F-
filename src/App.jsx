@@ -1,7 +1,7 @@
-import { Provider } from 'react-redux'
+// import { Provider } from 'react-redux'
 import './App.css'
 import Header from './components/header/Header'
-import store from './store/store'
+// import store from './store/store'
 import HomePage from './components/homePage/HomePage'
 import HomePage2 from './components/homepage2/HomePage2'
 // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -13,7 +13,7 @@ function App() {
   return (
     // <Router>
     <BrowserRouter>
-      <Provider store={store}>
+      {/* <Provider store={store}> */}
         <Header />
         {/* <AppRouter className="pt-20"/> */}
 
@@ -25,7 +25,7 @@ function App() {
 
         {/* <StoryData /> */}
         {/* <HomePage2 /> */}
-      </Provider>
+      {/* </Provider> */}
     </BrowserRouter>
     // </Router>
   )
