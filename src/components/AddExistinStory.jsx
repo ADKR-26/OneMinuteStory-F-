@@ -35,6 +35,7 @@ function AddExistingStory({title}) {
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
+        console.log("ERROR");
     };
 
     useEffect(() => {
@@ -110,10 +111,12 @@ function AddExistingStory({title}) {
                 }}
                 initialValues={{
                     remember: true,
+                    title: setTitle
                 }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
+                
             >
                 <Form.Item
                     label="Title"
@@ -133,8 +136,8 @@ function AddExistingStory({title}) {
                             minRows: 2,
                             maxRows: 10,
                         }}
-                        // disabled
-                        defaultValue={setTitle}
+                        disabled
+                        // defaultValue={setTitle}
                     // onChange={handleTyping}
                     />
                 </Form.Item>
