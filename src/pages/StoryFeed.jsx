@@ -8,13 +8,12 @@ function StoryFeed() {
 
     const specificStory = storyData.find((item) => item._id === titleId);
 
-    console.log("IDDDDDDDDDDDDD", specificStory);
-
+    // console.log("IDDDDDDDDDDDDD", specificStory);
     return (
         <div>
             {specificStory ? (
                 <div>
-                    <h2>{specificStory.title}</h2>
+                    <div className="mb-5 mt-5 text-3xl">{specificStory.title.toUpperCase()}</div>
                     {specificStory.story.map((story) => (
                         <div key={story._id}>{story.content}</div>
                     ))}

@@ -10,12 +10,12 @@ function TitleCard({ titleData, id }) {
 
     const setTitleId = () => {
         dispatch(actionSetTitleId(id));
-        console.log("DATA DELETED");
+        // console.log("DATA DELETED");
     };
 
     const deleteStory = (id) => {
         dispatch(deleteStoryData(id));
-        // window.location.reload();          //! will reload re-render when data is deleted
+        // window.location.reload();          //! will reload re-render when data is deleted not working
     };
 
     return (
@@ -41,7 +41,9 @@ function TitleCard({ titleData, id }) {
                     <NavLink to={{
                         pathname: "/story_details",
                         // state: { key: demo }
-                    }}>View</NavLink>
+                    }}>
+                        View
+                    </NavLink>
                 </Button>
             </Card>
         </div>
