@@ -27,7 +27,7 @@ export function getStoryData() {
     console.log("Working");
     return (dispatch) => {
         try {
-            axios.get('http://localhost:8000/getStoryData')
+            axios.get('http://localhost:3000/api/getStoryData')
                 .then((response) => {
                     const data = response.data;
                     console.log(data);
@@ -49,7 +49,7 @@ export function setStoryData(title, story) {
     console.log("DATAAAAAA", title, story)
     return (dispatch) => {
         try {
-            axios.post('http://localhost:8000/addStory', { title, story })
+            axios.post('http://localhost:3000/api/addStory', { title, story })
                 .then((response) => {
                     dispatch(actionSetStoryData(response));
                     console.log("Response", response);
@@ -70,7 +70,7 @@ export function deleteStoryData(id) {
     return (dispatch) => {
         try {
             axios
-                .delete(`http://localhost:8000/deleteStory/${id}`)
+                .delete(`http://localhost:3000/api/deleteStory/${id}`)
                 .then((response) => {
                     dispatch(actionDeleteStoryData(response.data.deletedStory));
                     console.log("Response", response.data.deletedStory);
