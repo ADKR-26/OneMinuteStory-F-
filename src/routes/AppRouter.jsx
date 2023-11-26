@@ -9,6 +9,8 @@ import StoryFeed from '../pages/StoryFeed';
 import ViewTile from '../pages/ViewTile';
 import AddStory from '../pages/AddStory';
 import Contact from '../pages/Contact/Contact';
+import SignIn from '../pages/signIn/SignIn';
+import SignUp from '../pages/signUp/SignUp';
 
 function AppRouter() {
     return (
@@ -19,6 +21,8 @@ function AppRouter() {
             <Route path="/view_stories" element={<ViewTile />} />
             <Route path="/add_story" element={<AddStory />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
             {/* Additional routes */}
             {/* </Switch> */}
         </Routes>
