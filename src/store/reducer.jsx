@@ -1,10 +1,11 @@
-import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA, SET_TITLE_ID } from "./action-types";
+import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA, SET_TITLE_ID, SIGN_UP, SIGN_IN } from "./action-types";
 
 const initialState = {
     storyData: [],
     addedStory: {},
     deletedStory: {},
-    titleId: null
+    titleId: null,
+    currentUser: null,
 }
 
 const storyReducer = (state = initialState, action) => {
@@ -20,6 +21,10 @@ const storyReducer = (state = initialState, action) => {
             return { ...state, deletedStory: action.payload };
         case SET_TITLE_ID:
             return { ...state, titleId: action.payload}
+        case SIGN_IN:
+            return { ...state, currentUser: action.payload};
+        case SIGN_UP:
+            return { ...state, currentUser: action.payload};
 
         default: return state;
     }

@@ -1,8 +1,13 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const currentUser = useSelector((state) => state?.oneMinuteStory?.currentUser?.data);
+
+    // const profilePicture = currentUser?.profilePicture;
+    // console.log("HERE", profilePicture);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -43,6 +48,15 @@ function Header() {
                 <li>
                     <Link to='/sign-in'>Sign-in</Link>
                 </li>
+                <li>
+                    <Link to='/profile'>
+                        {currentUser?.email ? (
+                            <img src={currentUser.profilePicture} alt='profile' className='h-7 w-7 rounded-full object-cover' />
+                        ) : (
+                            <li>Sign In</li>
+                        )}
+                    </Link>
+                </li>
             </ul>
 
             {/* Navigation links for mobile with semi-transparent and blurred background */}
@@ -56,6 +70,15 @@ function Header() {
                     </li>
                     <li className='text-center'>
                         <Link to='/sign-in' onClick={toggleMenu} className="text-lg hover:text-blue-300">Sign-in</Link>
+                    </li>
+                    <li>
+                        <Link to='/profile'>
+                            {currentUser ? (
+                                <img src={currentUser.profilePicture} alt='profile' className='h-7 w-7 rounded-full object-cover' />
+                            ) : (
+                                <li>Sign In</li>
+                            )}
+                        </Link>
                     </li>
                 </ul>
             )}

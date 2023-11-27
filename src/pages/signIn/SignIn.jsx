@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import { signInStart, signInSuccess, signInFailure } from "../../store/user/userSlice";
 // import data from '../../store/'
 import { useDispatch, useSelector } from "react-redux";
+import { signInUser } from "../../store/action";
 // import OAuth from "../components/OAuth";
 
 function SignIn() {
@@ -21,23 +22,25 @@ function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            dispatch(signInStart());
-            const res = await fetch('http://localhost:3000/api/auth/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-            const data = await res.json();
+            // dispatch(signInStart());
+            // const res = await fetch('http://localhost:3000/OMS-api/auth/signin', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(formData),
+            // });
+            dispatch(signInUser(formData.email, formData.password));
+            // const data = await res.json();
+            // console.log("Success", data);
             // setLoading(false);
 
-            if (data.success === false) {
-                // setError(true);
-                dispatch(signInFailure(data));
-                return;
-            }
-            dispatch(signInSuccess(data));
+            // if (data.success === false) {
+            //     // setError(true);
+            //     dispatch(signInUser(data));
+            //     return;
+            // }
+            // dispatch(signInSuccess(data));
 
             // if there is no error while signing in then it will navigate to homepage
             navigate('/');
@@ -45,7 +48,7 @@ function SignIn() {
         catch (error) {
             // setLoading(false);
             // setError(true);
-            dispatch(signInFailure(error));
+            dispatch(signInUser(error));
         }
     };
 
@@ -56,7 +59,7 @@ function SignIn() {
             </h1>
 
             <form 
-                // onSubmit={handleSubmit} 
+                onSubmit={handleSubmit} 
                 className="flex flex-col gap-4">
 
                 <input
@@ -64,7 +67,7 @@ function SignIn() {
                     placeholder="Email"
                     id="email"
                     className="bg-slate-100 p-3 rounded-lg"
-                    // onChange={handleChange}
+                    onChange={handleChange}
                 />
 
                 <input
@@ -72,7 +75,7 @@ function SignIn() {
                     placeholder="Password"
                     id="password"
                     className="bg-slate-100 p-3 rounded-lg"
-                    // onChange={handleChange}
+                    onChange={handleChange}
                 />
 
                 <button 

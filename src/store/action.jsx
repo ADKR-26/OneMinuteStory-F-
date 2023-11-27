@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA, SET_TITLE_ID } from "./action-types";
+import { GET_STORY_DATA, SET_STORY_DATA, DELETE_STORY_DATA, SET_TITLE_ID, SIGN_UP, SIGN_IN } from "./action-types";
 
 export const actionGetStoryData = (data) => ({
     type: GET_STORY_DATA,
@@ -14,6 +14,16 @@ export const actionSetStoryData = (data) => ({
 
 export const actionDeleteStoryData = (data) => ({
     type: DELETE_STORY_DATA,
+    payload: data,
+})
+
+export const actionSignUpUser = (data) => ({
+    type: SIGN_UP,
+    payload: data,
+})
+
+export const actionSignInUser = (data) => ({
+    type: SIGN_IN,
     payload: data,
 })
 
@@ -84,4 +94,45 @@ export function deleteStoryData(id) {
             console.log(error);
         }
     };
+}
+
+export function signUpUser(username, email, password) {
+    console.log("DATAAAAAA", username, email, password)
+    return (dispatch) => {
+        try {
+            axios.post('http://localhost:3000/OMS-api/auth/signup', { username, email, password })
+                .then((response) => {
+                    dispatch(actionSignUpUser(response));
+                    console.log("Response", response);
+                })
+                .catch((error) => {
+                    const data = error.response;
+                    dispatch(actionSignUpUser(data));
+                    console.log("Sign up error", error);
+                })
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+}
+export function signInUser(email, password) {
+    console.log("DATAAAAAA", email, password)
+    return (dispatch) => {
+        try {
+            axios.post('http://localhost:3000/OMS-api/auth/signin', { email, password })
+                .then((response) => {
+                    dispatch(actionSignInUser(response));
+                    console.log("Response", response);
+                })
+                .catch((error) => {
+                    const data = error.response;
+                    dispatch(actionSignInUser(data));
+                    console.log("Sign IN error", error);
+                })
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }
