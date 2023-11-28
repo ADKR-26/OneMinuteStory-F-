@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom"
 import { signUpUser } from "../../store/action";
-// import OAuth from "../components/OAuth";
+import OAuth from "../../components/OAuth";
 
 function SignUp() {
 
@@ -67,9 +67,9 @@ function SignUp() {
                     {/* {loading ? "Loading..." : "Sign Up"} */}
                     Sign Up
                 </button>
-                {/* <OAuth /> */}
+                <OAuth data="signup"/>
             </form>
-            
+
             <div className="flex gap-2 mt-5">
                 <p>Have an account?</p>
                 <Link to='/sign-in'>

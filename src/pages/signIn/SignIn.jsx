@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import data from '../../store/'
 import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../../store/action";
+import OAuth from "../../components/OAuth";
 // import OAuth from "../components/OAuth";
 
 function SignIn() {
@@ -84,7 +85,7 @@ function SignIn() {
                     {/* {loading ? "Loading..." : "Sign In"} */}
                     Sign In
                 </button>
-                {/* <OAuth /> */}
+                <OAuth data="signin"/>
             </form>
             <div className="flex gap-2 mt-5">
                 <p>Don&apos;t Have an account?</p>
