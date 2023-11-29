@@ -21,7 +21,8 @@ function StoryFeed() {
             ) : (
                 <div>No story found</div>
             )}
-            <AddExistingStory title={specificStory.title} />
+            <AddStory titleData={specificStory.title} />
+            {/* <AddExistingStory title={specificStory.title} /> */}
         </div>
     );
 }

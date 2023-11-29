@@ -10,7 +10,7 @@ function ViewTile() {
             <h1> STORY DATA </h1>
             {
                 titleData.map((data) => (
-                    <TitleCard key={data._id} id={data._id} titleData={data.title} />
+                    <TitleCard key={data._id} id={data._id} titleData={data.title} email={data?.email} />
                 ))
             }
         </div>
