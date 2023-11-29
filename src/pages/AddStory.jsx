@@ -1,18 +1,25 @@
-import { useState, useEffect } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
-import { useDispatch } from 'react-redux';
-import { setStoryData } from '../store/action';
+import { useState, useEffect } from "react";
+import { Button, Checkbox, Form, Input } from "antd";
+import TextArea from "antd/es/input/TextArea";
+import { useDispatch, useSelector } from "react-redux";
+import { setStoryData } from "../store/action";
+import { useNavigate } from "react-router-dom";
 
 function AddStory() {
-
     const dispatch = useDispatch();
+    const currentUser = useSelector(
+        (state) => state?.oneMinuteStory?.currentUser?.data
+    );
+
+    const navigate = useNavigate();
+
+    // console.log("User", currentUser);
 
     // const [timer, setTimer] = useState(null);
     const [remainingTime, setRemainingTime] = useState(5);
     const [isTyping, setIsTyping] = useState(false);
     const [titleEntered, setTitleEntered] = useState(true);
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState("");
     // const [formData, setFormData] = useState({});
     const [timerStarted, setTimerStarted] = useState(false);
 
@@ -20,21 +27,27 @@ function AddStory() {
 
     const onFinish = (values) => {
         // setFormData(values);
-        console.log('Success:', values);
-        const data = {
-            title: values.title,
-            story: [
-                {
-                    content: values.story
-                }
-            ]
+        if (currentUser?.email) {
+            console.log("Success:", values);
+            const data = {
+                title: values.title,
+                story: [
+                    {
+                        content: values.story,
+                    },
+                ],
+            };
+            // setRemainingTime(5);
+            // setTimerStarted(false);
+            setIsTyping(false);
+            resetData();
+            // console.log("FINISH");
+            dispatch(setStoryData(data.title, data.story));
         }
-        // setRemainingTime(5);
-        // setTimerStarted(false);
-        setIsTyping(false);
-        resetData();
-        // console.log("FINISH");
-        dispatch(setStoryData(data.title, data.story));
+        else {
+            navigate('/sign-in');
+        }
+
         // console.log('FORM DATA:', form.getFieldsValue());
     };
 
@@ -44,14 +57,14 @@ function AddStory() {
     };
 
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        console.log("Failed:", errorInfo);
     };
 
     // automatically clicks submit button after time expires and then resets form
     useEffect(() => {
         if (remainingTime === 0) {
-            const button = document.getElementById('submit-button');
-            const resetButton = document.getElementById('reset-button');
+            const button = document.getElementById("submit-button");
+            const resetButton = document.getElementById("reset-button");
             if (button) {
                 button.click();
             }
@@ -59,7 +72,6 @@ function AddStory() {
             setTimeout(() => {
                 resetButton.click();
             }, 1000);
-
         }
     }, [remainingTime]);
 
@@ -74,12 +86,12 @@ function AddStory() {
     };
 
     const handleTimeout = () => {
-        console.log('Timer expired!');
+        console.log("Timer expired!");
         setIsTyping(false);
     };
 
     if (remainingTime === 0) {
-        console.log('Timer expired!');
+        console.log("Timer expired!");
     }
 
     const resetData = () => {
@@ -108,6 +120,14 @@ function AddStory() {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
+            {!currentUser?.email ? (
+                <h1 className="text-4xl text-red-500">
+                    {" "}
+                    Please Sign In before adding story
+                </h1>
+            ) : (
+                ""
+            )}
 
             <h4> Timer will start as soon as you starts typing your story</h4>
 
@@ -140,7 +160,7 @@ function AddStory() {
                     rules={[
                         {
                             required: true,
-                            message: 'Please enter your title here!',
+                            message: "Please enter your title here!",
                         },
                     ]}
                 >
@@ -162,7 +182,7 @@ function AddStory() {
                     rules={[
                         {
                             required: true,
-                            message: 'Please enter your story here!',
+                            message: "Please enter your story here!",
                         },
                     ]}
                 >
@@ -170,7 +190,7 @@ function AddStory() {
                     <TextArea
                         className="w-96 h-48"
                         placeholder="Enter Your Story Here"
-                        disabled={title === ''}
+                        disabled={title === ""}
                         autoSize={{
                             minRows: 2,
                             maxRows: 10,
@@ -189,7 +209,7 @@ function AddStory() {
                     <div className="flex justify-center mt-8">
                         <Button
                             type="primary"
-                            htmlType='submit'
+                            htmlType="submit"
                             id="submit-button"
                             size="large"
                             className="bg-blue-600 hover:bg-blue-500 transition duration-300"
@@ -211,11 +231,11 @@ function AddStory() {
                     </div>
                 </Form.Item>
 
-                {remainingTime > 0 ?
+                {remainingTime > 0 ? (
                     <p></p>
-                    :
+                ) : (
                     <p>Time Expired!! Your story is submitted..</p>
-                }
+                )}
 
                 <p className="flex justify-center mt-8">
                     The Story will auto Submit when timer reaches to zero.
@@ -226,7 +246,9 @@ function AddStory() {
 
             {/* {isTyping && ( */}
             <div className="mt-4 text-center text-lg font-bold">
-                {remainingTime > 0 ? `Time Remaining: ${remainingTime} seconds` : 'Time Expired'}
+                {remainingTime > 0
+                    ? `Time Remaining: ${remainingTime} seconds`
+                    : "Time Expired"}
             </div>
             {/* )} */}
         </div>

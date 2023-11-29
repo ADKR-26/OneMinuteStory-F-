@@ -8,7 +8,6 @@ import OAuth from "../../components/OAuth";
 // import OAuth from "../components/OAuth";
 
 function SignIn() {
-
     const [formData, setFormData] = useState({});
     // const [error, setError] = useState(false);
     // const [loading, setLoading] = useState(false);
@@ -44,9 +43,8 @@ function SignIn() {
             // dispatch(signInSuccess(data));
 
             // if there is no error while signing in then it will navigate to homepage
-            navigate('/');
-        }
-        catch (error) {
+            navigate("/");
+        } catch (error) {
             // setLoading(false);
             // setError(true);
             dispatch(signInUser(error));
@@ -55,14 +53,9 @@ function SignIn() {
 
     return (
         <div className="p-3 max-w-lg mx-auto">
-            <h1 className="text-3xl text-center font-semibold my-7">
-                Sign In
-            </h1>
+            <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
 
-            <form 
-                onSubmit={handleSubmit} 
-                className="flex flex-col gap-4">
-
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <input
                     type="text"
                     placeholder="Email"
@@ -79,17 +72,18 @@ function SignIn() {
                     onChange={handleChange}
                 />
 
-                <button 
-                    // disabled={loading} 
-                    className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+                <button
+                    // disabled={loading}
+                    className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+                >
                     {/* {loading ? "Loading..." : "Sign In"} */}
                     Sign In
                 </button>
-                <OAuth data="signin"/>
+                <OAuth data="signin" />
             </form>
             <div className="flex gap-2 mt-5">
                 <p>Don&apos;t Have an account?</p>
-                <Link to='/sign-up'>
+                <Link to="/sign-up">
                     <span className="text-blue-500">Sign Up</span>
                 </Link>
             </div>
@@ -97,7 +91,7 @@ function SignIn() {
                 {error ? error.message || "Something went wrong" : ''}
             </p> */}
         </div>
-    )
+    );
 }
 
-export default SignIn
+export default SignIn;

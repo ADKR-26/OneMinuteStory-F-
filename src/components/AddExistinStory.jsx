@@ -4,7 +4,7 @@ import TextArea from 'antd/es/input/TextArea';
 import { useDispatch } from 'react-redux';
 import { setStoryData } from '../store/action';
 
-function AddExistingStory({title}) {
+function AddExistingStory({ title }) {
 
     // console.log("TITLEEE", title);
 
@@ -116,7 +116,7 @@ function AddExistingStory({title}) {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
-                
+
             >
                 <Form.Item
                     label="Title"
@@ -137,7 +137,7 @@ function AddExistingStory({title}) {
                             maxRows: 10,
                         }}
                         disabled
-                        // defaultValue={setTitle}
+                    // defaultValue={setTitle}
                     // onChange={handleTyping}
                     />
                 </Form.Item>
