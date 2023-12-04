@@ -4,10 +4,12 @@ import { actionSetTitleId, deleteStoryData } from "../../store/action";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteOutlined } from "@ant-design/icons";
 
-function TitleCard({ titleData, id, email }) {
+function TitleCard({ titleData, id, email, author }) {
     const currentUser = useSelector(
         (state) => state?.oneMinuteStory?.currentUser?.data
     );
+
+    console.log(author)
 
     // console.log("EMAIL", email);
 
@@ -28,7 +30,7 @@ function TitleCard({ titleData, id, email }) {
             {/* Current Stories */}
             <Card
                 key={id}
-                // className="border border-black-1100 rounded-lg"
+                // className="w-400"
                 style={{
                     display: "flex",
                     justifyContent: "center",
@@ -36,27 +38,40 @@ function TitleCard({ titleData, id, email }) {
                     width: 900,
                     marginBottom: 10,
                     border: "2px solid rgba(150, 150, 150, 1)",
+                    boxShadow: "10px 10px rgba(210, 210, 210, 1)",
+                    // gap: "20px",
+                    marginTop: "20px",
                 }}
             >
                 {currentUser?.email === email ? (
                     <DeleteOutlined
-                        className="absolute top-0 right-1 cursor-pointer"
+                        className="absolute top-0 right-1 cursor-pointer text-2xl text-red-500"
                         onClick={() => deleteStory(id)}
                     />
                 ) : (
                     ""
                 )}
-                <p className="p-10"> {titleData} </p>
-                <Button onClick={setTitleId}>
-                    <NavLink
-                        to={{
-                            pathname: "/story_details",
-                            // state: { key: demo }
-                        }}
+                <p className="p-10 text-2xl">
+                    <label className="font-bold">Title:</label> {titleData}{" "}
+                </p>
+                <div className="flex justify-center">
+                    <Button
+                        onClick={setTitleId}
+                        className="text-xl h-12 bg-blue-900 text-white uppercase font-semibold py-2 rounded-xl shadow-xl"
                     >
-                        View
-                    </NavLink>
-                </Button>
+                        <NavLink
+                            to={{
+                                pathname: "/story_details",
+                                // state: { key: demo }
+                            }}
+                        >
+                            View
+                        </NavLink>
+                    </Button>
+                </div>
+                <div className="flex justify-center text-lg font-semibold">
+                    <label htmlFor="">Author: {author} </label>
+                </div>
             </Card>
         </div>
     );
