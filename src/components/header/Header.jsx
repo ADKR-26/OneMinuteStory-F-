@@ -8,9 +8,6 @@ function Header() {
         (state) => state?.oneMinuteStory?.currentUser?.data
     );
 
-    // const profilePicture = currentUser?.profilePicture;
-    // console.log("HERE", profilePicture);
-
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -44,15 +41,12 @@ function Header() {
 
             {/* Navigation links for desktop */}
             <ul className="hidden lg:flex gap-10 text-white mx-6">
-                <li>
+                <li className="text-xl">
                     <Link to="/">Home</Link>
                 </li>
-                <li>
+                <li className="text-xl">
                     <Link to="/contact">Contact</Link>
                 </li>
-                {/* <li>
-                    <Link to="/sign-in">Sign-in</Link>
-                </li> */}
                 <li>
                     <Link to={currentUser?.email ? "/profile" : "/sign-in"}>
                         {currentUser?.email ? (
@@ -62,7 +56,7 @@ function Header() {
                                 className="h-7 w-7 rounded-full object-cover"
                             />
                         ) : (
-                            <li>Sign In</li>
+                            <li className="text-xl">Sign In</li>
                         )}
                     </Link>
                 </li>

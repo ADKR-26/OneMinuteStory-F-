@@ -122,9 +122,9 @@ function AddStory({ titleData }) {
     }, [remainingTime, isTyping]);
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
+        <div className="flex flex-col items-center justify-center">
             {!currentUser?.email ? (
-                <h1 className="text-4xl text-red-500">
+                <h1 className="text-7xl text-red-500 mt-80">
                     {" "}
                     Please Sign In before adding story
                 </h1>
