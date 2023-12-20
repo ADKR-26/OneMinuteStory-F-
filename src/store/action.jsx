@@ -91,12 +91,17 @@ export function getStoryData() {
     };
 }
 
-export function setStoryData(title, story, email) {
-    console.log("DATAAAAAA", title, story, email);
+export function setStoryData(title, story, email, username) {
+    console.log("DATAAAAAA", title, story, email, username);
     return (dispatch) => {
         try {
             axios
-                .post("http://localhost:3000/api/addStory", { title, story, email })
+                .post("http://localhost:3000/api/addStory", {
+                    title,
+                    story,
+                    email,
+                    author: username,
+                })
                 .then((response) => {
                     dispatch(actionSetStoryData(response));
                     console.log("Response", response);

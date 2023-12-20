@@ -25,7 +25,8 @@ function AddStory({ titleData }) {
 
     const [form] = Form.useForm();
 
-    console.log("Title", title);
+    // console.log("Title", title);
+    // console.log("EMAILLL", currentUser);
 
     const onFinish = (values) => {
         // setFormData(values);
@@ -38,14 +39,15 @@ function AddStory({ titleData }) {
                         content: values.story,
                     },
                 ],
+                writerName: currentUser?.username
                 // email: currentUser.email,
             };
             // setRemainingTime(5);
             // setTimerStarted(false);
             setIsTyping(false);
             resetData();
-            console.log("EMAILLL", currentUser?.email);
-            dispatch(setStoryData(data.title, data.story, currentUser?.email));
+            console.log("EMAILLL", currentUser);
+            dispatch(setStoryData(data.title, data.story, currentUser?.email, currentUser?.username));
         } else {
             navigate("/sign-in");
         }

@@ -4,6 +4,8 @@ import TitleCard from "../components/Card/TitleCard";
 function ViewTile() {
     const titleData = useSelector((state) => state?.oneMinuteStory?.storyData);
 
+    // console.log("CHECK", titleData);
+
     return (
         <div>
             <p className="text-5xl flex justify-center mb-20 mt-20 font-bold"> STORY DATA </p>
@@ -13,7 +15,7 @@ function ViewTile() {
                     id={data._id}
                     titleData={data.title}
                     email={data?.email}
-                    author={data?.story[0]?.writerName}
+                    author={data?.author}
                 />
             ))}
         </div>
