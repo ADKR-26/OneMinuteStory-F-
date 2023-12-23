@@ -1,7 +1,7 @@
 // import { BrowserRouter as Router } from 'react-router-dom';
 // import { Switch, Route } from 'react-router-dom';
 import { Routes, Route } from "react-router-dom";
-import HomePage2 from "../components/homepage2/homepage2";
+import HomePage2 from "../components/homepage2/HomePage2";
 import StoryFeed from "../pages/StoryFeed";
 import ViewTile from "../pages/ViewTile";
 import AddStory from "../pages/AddStory";
