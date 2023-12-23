@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useDispatch, useSelector } from "react-redux";
-import { setStoryData } from "../store/action";
+import { getStoryData, setStoryData } from "../store/action";
 import { useNavigate } from "react-router-dom";
 
 function AddStory({ titleData }) {
@@ -39,7 +39,7 @@ function AddStory({ titleData }) {
                         content: values.story,
                     },
                 ],
-                writerName: currentUser?.username
+                writerName: currentUser?.username,
                 // email: currentUser.email,
             };
             // setRemainingTime(5);
@@ -47,7 +47,18 @@ function AddStory({ titleData }) {
             setIsTyping(false);
             resetData();
             console.log("EMAILLL", currentUser);
-            dispatch(setStoryData(data.title, data.story, currentUser?.email, currentUser?.username));
+            dispatch(
+                setStoryData(
+                    data.title,
+                    data.story,
+                    currentUser?.email,
+                    currentUser?.username
+                )
+            );
+
+            setTimeout(() => {
+                dispatch(getStoryData());
+            }, 500);
         } else {
             navigate("/sign-in");
         }
@@ -107,7 +118,7 @@ function AddStory({ titleData }) {
         setTimeout(() => {
             setRemainingTime(5);
             form.resetFields();
-        }, 3000);
+        }, 500);
         // form.resetFields();
     };
 
@@ -204,6 +215,9 @@ function AddStory({ titleData }) {
                                     minRows: 2,
                                     maxRows: 10,
                                 }}
+                                onPaste={(e) => e.preventDefault()}
+                                // onCopy={(e) => e.preventDefault()}
+                                // onCut={(e) => e.preventDefault()}
                                 // value={storyText}    this is causing some problem to be checked
                                 onChange={handleTyping}
                             />
