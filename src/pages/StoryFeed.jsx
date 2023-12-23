@@ -5,7 +5,9 @@ function StoryFeed() {
     const titleId = useSelector((state) => state?.oneMinuteStory?.titleId);
     const storyData = useSelector((state) => state?.oneMinuteStory?.storyData);
 
-    const specificStory = storyData.find((item) => item._id === titleId);
+    const specificStory = storyData?.find((item) => item?._id === titleId);
+
+    console.log("Specific Story", specificStory);
 
     return (
         <div>
