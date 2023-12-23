@@ -16,7 +16,11 @@ function HomePage2() {
             <div className="flex justify-center">
                 <div className="text-center">
                     <div className="flex flex-col justify-center items-center">
-                        <p className="text-5xl font-bold mb-40 mt-40">
+                        <p className="text-red-600 text-3xl mt-20">
+                            * This app is still in production, but you can still
+                            use demo version of this app.
+                        </p>
+                        <p className="text-5xl font-bold mb-40 mt-10">
                             One Minute Story
                         </p>
                         <p className="text-2xl font-semibold mb-40">
