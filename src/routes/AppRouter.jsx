@@ -2,13 +2,13 @@
 // import { Switch, Route } from 'react-router-dom';
 import { Routes, Route } from "react-router-dom";
 import HomePage2 from "../components/homepage2/HomePage2";
-import StoryFeed from "../pages/StoryFeed";
-import ViewTile from "../pages/ViewTile";
-import AddStory from "../pages/AddStory";
+import StoryFeed from "../pages/storyFeed/StoryFeed";
+import ViewTile from "../pages/viewTile/ViewTile";
+import AddStory from "../pages/addStory/AddStory";
 import Contact from "../pages/contact/Contact";
 import SignIn from "../pages/signIn/SignIn";
 import SignUp from "../pages/signUp/SignUp";
-import Profile from "../pages/Profile";
+import Profile from "../pages/profile/Profile";
 import PrivateRoute from "../components/PrivateRoute";
 
 function AppRouter() {

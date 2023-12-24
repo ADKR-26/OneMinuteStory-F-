@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import AddStory from "./AddStory";
+import AddStory from "../addStory/AddStory";
 
 function StoryFeed() {
     const titleId = useSelector((state) => state?.oneMinuteStory?.titleId);

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useDispatch, useSelector } from "react-redux";
-import { getStoryData, setStoryData } from "../store/action";
+import { getStoryData, setStoryData } from "../../store/action";
 import { useNavigate } from "react-router-dom";
 
 function AddStory({ titleData }) {
