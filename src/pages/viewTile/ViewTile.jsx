@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import TitleCard from "../components/Card/TitleCard";
+import TitleCard from "../../components/Card/TitleCard";
 import { useEffect } from "react";
 
 function ViewTile() {
