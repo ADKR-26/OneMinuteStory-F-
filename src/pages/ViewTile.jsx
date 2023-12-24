@@ -1,10 +1,15 @@
 import { useSelector } from "react-redux";
 import TitleCard from "../components/Card/TitleCard";
+import { useEffect } from "react";
 
 function ViewTile() {
     const titleData = useSelector((state) => state?.oneMinuteStory?.storyData);
 
     // console.log("CHECK", titleData);
+
+    useEffect(() => {
+        // console.log("");
+    }, [titleData]);
 
     return (
         <div>
