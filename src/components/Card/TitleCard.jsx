@@ -1,6 +1,10 @@
 import { Button, Card } from "antd";
 import { NavLink } from "react-router-dom";
-import { actionSetTitleId, deleteStoryData } from "../../store/action";
+import {
+    actionSetTitleId,
+    deleteStoryData,
+    getStoryData,
+} from "../../store/action";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteOutlined } from "@ant-design/icons";
 
@@ -9,7 +13,7 @@ function TitleCard({ titleData, id, email, author }) {
         (state) => state?.oneMinuteStory?.currentUser?.data
     );
 
-    console.log(author)
+    console.log(author);
 
     // console.log("EMAIL", email);
 
@@ -22,6 +26,10 @@ function TitleCard({ titleData, id, email, author }) {
 
     const deleteStory = (id) => {
         dispatch(deleteStoryData(id));
+
+        setTimeout(() => {              //TODO: Need to find a different way to rerender the data
+            dispatch(getStoryData());
+        }, 500);
         // window.location.reload();          //! will reload / re-render when data is deleted not working
     };
 
