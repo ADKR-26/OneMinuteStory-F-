@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import './header.scss';
+
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const currentUser = useSelector(

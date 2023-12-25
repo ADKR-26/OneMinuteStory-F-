@@ -8,6 +8,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteOutlined } from "@ant-design/icons";
 
+import './titleCard.scss';
+
 function TitleCard({ titleData, id, email, author }) {
     const currentUser = useSelector(
         (state) => state?.oneMinuteStory?.currentUser?.data
