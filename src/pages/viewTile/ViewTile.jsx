@@ -1,8 +1,15 @@
 import { useSelector } from "react-redux";
-import TitleCard from "../components/Card/TitleCard";
+import TitleCard from "../../components/Card/TitleCard";
+import { useEffect } from "react";
 
 function ViewTile() {
     const titleData = useSelector((state) => state?.oneMinuteStory?.storyData);
+
+    // console.log("CHECK", titleData);
+
+    useEffect(() => {
+        // console.log("");
+    }, [titleData]);
 
     return (
         <div>
@@ -13,7 +20,7 @@ function ViewTile() {
                     id={data._id}
                     titleData={data.title}
                     email={data?.email}
-                    author={data?.story[0]?.writerName}
+                    author={data?.author}
                 />
             ))}
         </div>

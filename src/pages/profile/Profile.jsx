@@ -6,7 +6,7 @@ import {
     ref,
     uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../../firebase";
+import { app } from "../../../firebase";
 
 export default function Profile() {
     const currentUser = useSelector(

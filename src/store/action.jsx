@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const url = import.meta.env.VITE_API_URL;
+
 import {
     GET_STORY_DATA,
     SET_STORY_DATA,
@@ -74,7 +76,7 @@ export function getStoryData() {
     return (dispatch) => {
         try {
             axios
-                .get("http://localhost:3000/api/getStoryData")
+                .get(`${url}/api/getStoryData`)
                 .then((response) => {
                     const data = response.data;
                     console.log(data);
@@ -91,12 +93,17 @@ export function getStoryData() {
     };
 }
 
-export function setStoryData(title, story, email) {
-    console.log("DATAAAAAA", title, story, email);
+export function setStoryData(title, story, email, username) {
+    console.log("DATAAAAAA", title, story, email, username);
     return (dispatch) => {
         try {
             axios
-                .post("http://localhost:3000/api/addStory", { title, story, email })
+                .post(`${url}/api/addStory`, {
+                    title,
+                    story,
+                    email,
+                    author: username,
+                })
                 .then((response) => {
                     dispatch(actionSetStoryData(response));
                     console.log("Response", response);
@@ -116,7 +123,7 @@ export function deleteStoryData(id) {
     return (dispatch) => {
         try {
             axios
-                .delete(`http://localhost:3000/api/deleteStory/${id}`)
+                .delete(`${url}/api/deleteStory/${id}`)
                 .then((response) => {
                     dispatch(actionDeleteStoryData(response.data.deletedStory));
                     console.log("Response", response.data.deletedStory);
@@ -137,7 +144,7 @@ export function signInUser(email, password) {
     return (dispatch) => {
         try {
             axios
-                .post("http://localhost:3000/OMS-api/auth/signin", {
+                .post(`${url}/OMS-api/auth/signin`, {
                     email,
                     password,
                 })
@@ -162,7 +169,7 @@ export function signUpUser(username, email, password) {
         dispatch(signUpUserRequest());
         try {
             axios
-                .post("http://localhost:3000/OMS-api/auth/signup", {
+                .post(`${url}/OMS-api/auth/signup`, {
                     username,
                     email,
                     password,
@@ -189,7 +196,7 @@ export function signInUserGoogle(email) {
     return (dispatch) => {
         try {
             axios
-                .post("http://localhost:3000/OMS-api/auth/google", { email })
+                .post(`${url}/OMS-api/auth/google`, { email })
                 .then((response) => {
                     dispatch(actionSignInUserGoogle(response));
                     console.log("Response", response);
@@ -210,7 +217,7 @@ export function signUpUserGoogle(name, email, photo) {
     return (dispatch) => {
         try {
             axios
-                .post("http://localhost:3000/OMS-api/auth/google", {
+                .post(`${url}/OMS-api/auth/google`, {
                     name,
                     email,
                     photo,
