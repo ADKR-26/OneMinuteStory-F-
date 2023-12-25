@@ -8,8 +8,10 @@ import OAuth from "../../components/OAuth";
 // import OAuth from "../components/OAuth";
 
 function SignIn() {
+    const errorStatus = useSelector((state) => state?.oneMinuteStory?.error);
+
     const [formData, setFormData] = useState({});
-    // const [error, setError] = useState(false);
+    const [error, setError] = useState(false);
     // const [loading, setLoading] = useState(false);
     // const { loading, error } = useSelector((state) => state?.user);
     const navigate = useNavigate();
@@ -41,15 +43,25 @@ function SignIn() {
             //     return;
             // }
             // dispatch(signInSuccess(data));
+            setError(errorStatus);
 
             // if there is no error while signing in then it will navigate to homepage
-            navigate("/");
+            if (error) {
+                navigate("/");
+            }
         } catch (error) {
             // setLoading(false);
-            // setError(true);
+            setError(true);
+            console.log("Error inside", error);
+
+            console.log("Error Sign in", error);
             dispatch(signInUser(error));
         }
     };
+
+    if (error === true) {
+        console.log("Error", error);
+    }
 
     return (
         <div className="p-3 max-w-lg mx-auto">
@@ -87,9 +99,10 @@ function SignIn() {
                     <span className="text-blue-500">Sign Up</span>
                 </Link>
             </div>
-            {/* <p className="text-red-700 mt-5">
-                {error ? error.message || "Something went wrong" : ''}
-            </p> */}
+            <p className="text-red-700 mt-5">
+                {/* {error ? error.message || "Something went wrong" : ''} */}
+                {error ? "Something went wrong" : ""}
+            </p>
         </div>
     );
 }

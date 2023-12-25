@@ -155,6 +155,7 @@ export function signInUser(email, password) {
                 .catch((error) => {
                     const data = error.response;
                     dispatch(actionSignInUser(data));
+                    dispatch(signUpUserFailure(true));
                     console.log("Sign IN error", error);
                 });
         } catch (error) {
