@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStoryData, setStoryData } from "../../store/action";
 import { useNavigate } from "react-router-dom";
 
-import "./addStory.scss";
-
 function AddStory({ titleData }) {
     const dispatch = useDispatch();
     const currentUser = useSelector(
@@ -70,12 +68,7 @@ function AddStory({ titleData }) {
 
     const handleTitleChange = (e) => {
         const newTitle = e.target.value;
-
-        if (newTitle === "") {
-            setTitle(undefined);
-        } else {
-            setTitle(e.target.value);
-        }
+        setTitle(newTitle);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -142,7 +135,6 @@ function AddStory({ titleData }) {
     }, [remainingTime, isTyping]);
 
     return (
-        <section id="addStory-jsx">
             <div className="main-container">
                 {!currentUser?.email ? (
                     <h1 className="text-7xl text-red-500 mt-80">
@@ -305,7 +297,148 @@ function AddStory({ titleData }) {
                     </>
                 )}
             </div>
-        </section>
+
+        <div className="flex flex-col items-center justify-center">
+            {!currentUser?.email ? (
+                <h1 className="text-7xl text-red-500 mt-80">
+                    {" "}
+                    Please Sign In before adding story
+                </h1>
+            ) : (
+                <>
+                    <h4>
+                        {" "}
+                        Timer will start as soon as you starts typing your story
+                    </h4>
+
+                    <h2 className="text-2xl font-bold mb-4">Add New Story</h2>
+
+                    {/* FORM */}
+
+                    <Form
+                        name="basic"
+                        form={form}
+                        labelCol={{
+                            span: 8,
+                        }}
+                        wrapperCol={{
+                            span: 16,
+                        }}
+                        style={{
+                            maxWidth: 600,
+                        }}
+                        initialValues={{
+                            remember: true,
+                            title: titleData ? title : "",
+                        }}
+                        disabled={currentUser?.email ? false : true}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="off"
+                    >
+                        <Form.Item
+                            label="Title"
+                            name="title"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter your title here!",
+                                },
+                            ]}
+                        >
+                            {/* <Input /> */}
+                            <TextArea
+                                className="w-96 h-48"
+                                placeholder="Please enter your title here!"
+                                autoSize={{
+                                    minRows: 2,
+                                    maxRows: 10,
+                                }}
+                                disabled={titleData ? true : false}
+                                onChange={handleTitleChange}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Story"
+                            name="story"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter your story here!",
+                                },
+                            ]}
+                        >
+                            {/* <Input.Password /> */}
+                            <TextArea
+                                className="w-96 h-48"
+                                placeholder="Enter Your Story Here"
+                                disabled={title === undefined ? true : false}
+                                autoSize={{
+                                    minRows: 2,
+                                    maxRows: 10,
+                                }}
+                                onPaste={(e) => e.preventDefault()}
+                                // onCopy={(e) => e.preventDefault()}
+                                // onCut={(e) => e.preventDefault()}
+                                // value={storyText}    this is causing some problem to be checked
+                                onChange={handleTyping}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            wrapperCol={{
+                                offset: 8,
+                                span: 16,
+                            }}
+                        >
+                            <div className="flex justify-center mt-8">
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    id="submit-button"
+                                    size="large"
+                                    className="bg-blue-600 hover:bg-blue-500 transition duration-300"
+                                >
+                                    Add Story, button to be removed
+                                </Button>
+                            </div>
+                            <div className="flex justify-center mt-8">
+                                <Button
+                                    type="primary"
+                                    size="large"
+                                    id="reset-button"
+                                    htmlType="button"
+                                    className="bg-blue-600 hover:bg-blue-500 transition duration-300"
+                                    onClick={resetData}
+                                >
+                                    Reset
+                                </Button>
+                            </div>
+                        </Form.Item>
+
+                        {remainingTime > 0 ? (
+                            <p></p>
+                        ) : (
+                            <p>Time Expired!! Your story is submitted..</p>
+                        )}
+
+                        <p className="flex justify-center mt-8">
+                            The Story will auto Submit when timer reaches to
+                            zero.
+                        </p>
+                    </Form>
+
+                    {/* FORM END */}
+
+                    <div className="mt-4 text-center text-lg font-bold">
+                        {remainingTime > 0
+                            ? `Time Remaining: ${remainingTime} seconds`
+                            : "Time Expired"}
+                    </div>
+                </>
+            )}
+        </div>
     );
 }
 

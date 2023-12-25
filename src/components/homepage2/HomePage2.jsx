@@ -14,27 +14,35 @@ function HomePage2() {
     }, []);
 
     return (
-        <section id="homepage-jsx">
-            <div className="main-container">
-                <div className="container">
-                    <p className="warning-container">
-                        * This app is still in production, but you can still use
-                        demo version of this app.
-                    </p>
-                    <p className="title">One Minute Story</p>
-                    <p className="description">
-                        Ignite creativity in 60 seconds! Choose a title, feel
-                        the rush, and craft captivating tales against the clock.
-                        Join a vibrant community of storytellers for an
-                        exhilarating journey.
-                    </p>
-                    <div className="button-container">
-                        <Button>
-                            <NavLink to="/view_stories">View Stories</NavLink>
-                        </Button>
-                        <Button>
-                            <NavLink to="/add_story">Add Story</NavLink>
-                        </Button>
+        <div>
+            <div className="flex justify-center">
+                <div className="text-center">
+                    <div className="flex flex-col justify-center items-center">
+                        <p className="text-red-600 text-3xl mt-20">
+                            * This app is still in production, but you can still
+                            use demo version of this app.
+                        </p>
+                        <p className="text-5xl font-bold mb-40 mt-10">
+                            One Minute Story
+                        </p>
+                        <p className="text-2xl font-semibold mb-40">
+                            Ignite creativity in 60 seconds! Choose a title,
+                            feel the rush, and craft captivating tales against
+                            the clock.
+                            <br />
+                            Join a vibrant community of storytellers for an
+                            exhilarating journey.
+                        </p>
+                        <div className="flex gap-6">
+                            <Button className="text-2xl h-20 bg-blue-900 text-white uppercase font-semibold py-2 rounded-3xl shadow-xl transform hover:-translate-y-2">
+                                <NavLink to="/view_stories">
+                                    View Stories
+                                </NavLink>
+                            </Button>
+                            <Button className="text-2xl h-20 bg-blue-900 text-white uppercase font-semibold py-2 rounded-3xl shadow-xl transform hover:-translate-y-2">
+                                <NavLink to="/add_story">Add Story</NavLink>
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
