@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import OMS from '../../assets/OMS.png';
 
 import "./header.scss";
 
@@ -23,7 +24,8 @@ function Header() {
                         to="/"
                         // className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mx-6"
                     >
-                        One Minute Story
+                        <img src={OMS} alt="" />
+                        {/* One Minute Story */}
                     </Link>
                 </div>
 
@@ -53,6 +55,12 @@ function Header() {
                         </li>
                         <li>
                             <Link to="/contact">Contact</Link>
+                        </li>
+                        <li>
+                            <Link to="/view_stories">View Stories</Link>
+                        </li>
+                        <li>
+                            <Link to="/add_story">Add Story</Link>
                         </li>
                         <li>
                             <Link
@@ -96,6 +104,24 @@ function Header() {
                                     // className="text-lg hover:text-blue-300"
                                 >
                                     Contact
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/view_stories"
+                                    onClick={toggleMenu}
+                                    // className="text-lg hover:text-blue-300"
+                                >
+                                    View Stories
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/add_story"
+                                    onClick={toggleMenu}
+                                    // className="text-lg hover:text-blue-300"
+                                >
+                                    Add Story
                                 </Link>
                             </li>
 

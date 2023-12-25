@@ -18,7 +18,7 @@ const initialState = {
     titleId: null,
     currentUser: null,
     loading: false,
-    error: null,
+    error: false,
     user: null,
 };
 

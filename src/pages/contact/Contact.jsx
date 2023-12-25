@@ -1,11 +1,11 @@
-import React from 'react'
-
-import './contact.scss';
+import "./contact.scss";
 
 function Contact() {
     return (
-        <div>Contact</div>
-    )
+        <div>
+            Github -<a href="https://github.com/ADKR-26">Click ME</a>
+        </div>
+    );
 }
 
-export default Contact
+export default Contact;
