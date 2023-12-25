@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getStoryData } from '../../store/action';
 import StoryCard from '../Card/StoryCard';
 
-//! Not in Use
-
 function StoryData() {
 
     const dispatch = useDispatch();
