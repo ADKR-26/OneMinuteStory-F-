@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStoryData, setStoryData } from "../../store/action";
 import { useNavigate } from "react-router-dom";
 
+import './addStory.scss';
+
 function AddStory({ titleData }) {
     const dispatch = useDispatch();
     const currentUser = useSelector(

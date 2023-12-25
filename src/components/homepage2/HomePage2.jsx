@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { getStoryData } from "../../store/action";
 import { NavLink } from "react-router-dom";
 
+import './homepage.scss';
+
 function HomePage2() {
     const dispatch = useDispatch();
 
