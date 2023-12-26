@@ -18,7 +18,7 @@ function AddStory({ titleData }) {
     // console.log("User", currentUser);
 
     // const [timer, setTimer] = useState(null);
-    const [remainingTime, setRemainingTime] = useState(5);
+    const [remainingTime, setRemainingTime] = useState(60);
     const [isTyping, setIsTyping] = useState(false);
     const [titleEntered, setTitleEntered] = useState(true);
     const [title, setTitle] = useState(titleData);
@@ -124,7 +124,7 @@ function AddStory({ titleData }) {
         setTitle(titleData);
         // setStoryText('')
         setTimeout(() => {
-            setRemainingTime(5);
+            setRemainingTime(60);
             form.resetFields();
         }, 2000);
         // form.resetFields();
