@@ -285,3 +285,20 @@
   transform: translateY(-50%);
   color: #555;
 }
+
+@media screen and (max-width: 768px) {
+  .add-story-wrapper {
+    margin-top: 0;
+    flex-direction: column-reverse;
+    height: max-content;
+
+    .add-story-left-container {
+      border: none;
+
+      .ant-form {
+        width: 100%;
+        padding-inline: 20px;
+      }
+    }
+  }
+}
