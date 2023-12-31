@@ -93,7 +93,7 @@ export function getStoryData() {
     };
 }
 
-export function setStoryData(title, story, email, username) {
+export function setStoryData({title, story, email, username}, successHandler) {
     console.log("DATAAAAAA", title, story, email, username);
     return (dispatch) => {
         try {
@@ -106,6 +106,9 @@ export function setStoryData(title, story, email, username) {
                 })
                 .then((response) => {
                     dispatch(actionSetStoryData(response));
+                    if(response.status === 201) {
+                        successHandler();
+                    }
                     console.log("Response", response);
                 })
                 .catch((error) => {

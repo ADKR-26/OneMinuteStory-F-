@@ -1,309 +1,201 @@
-import { useState, useEffect } from "react";
-import { Button, Checkbox, Form, Input } from "antd";
-import TextArea from "antd/es/input/TextArea";
+import { useState, useEffect, useCallback } from "react";
+import { Button, Form, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getStoryData, setStoryData } from "../../store/action";
+import { setStoryData } from "../../store/action";
 import { useNavigate } from "react-router-dom";
 
 import "./addStory.scss";
 
 function AddStory({ titleData }) {
-    const dispatch = useDispatch();
-    const currentUser = useSelector(
-        (state) => state?.oneMinuteStory?.currentUser?.data
-    );
+  const dispatch = useDispatch();
+  const currentUser = useSelector(
+    (state) => state?.oneMinuteStory?.currentUser?.data
+  );
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [remainingTime, setRemainingTime] = useState(60);
+  const [isDisable, setDisable] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [form] = Form.useForm();
 
-    // console.log("User", currentUser);
-
-    // const [timer, setTimer] = useState(null);
-    const [remainingTime, setRemainingTime] = useState(60);
-    const [isTyping, setIsTyping] = useState(false);
-    const [titleEntered, setTitleEntered] = useState(true);
-    const [title, setTitle] = useState(titleData);
-    // const [formData, setFormData] = useState({});
-    const [timerStarted, setTimerStarted] = useState(false);
-
-    const [form] = Form.useForm();
-
-    // console.log("Title", title);
-    // console.log("EMAILLL", currentUser);
-
-    const onFinish = (values) => {
-        // setFormData(values);
-        if (currentUser?.email) {
-            console.log("Success:", values);
-            const data = {
-                title: values.title,
-                story: [
-                    {
-                        content: values.story,
-                    },
-                ],
-                writerName: currentUser?.username,
-                // email: currentUser.email,
-            };
-            // setRemainingTime(5);
-            // setTimerStarted(false);
-            setIsTyping(false);
-            resetData();
-            console.log("EMAILLL", currentUser);
-            dispatch(
-                setStoryData(
-                    data.title,
-                    data.story,
-                    currentUser?.email,
-                    currentUser?.username
-                )
-            );
-
-            setTimeout(() => {
-                dispatch(getStoryData());
-            }, 500);
-        } else {
-            navigate("/sign-in");
-        }
-
-        // console.log('FORM DATA:', form.getFieldsValue());
-    };
-
-    const handleTitleChange = (e) => {
-        const newTitle = e.target.value;
-        // setTitle(newTitle);
-
-        if (newTitle === "") {
-            setTitle(undefined);
-        } else {
-            setTitle(e.target.value);
-        }
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log("Failed:", errorInfo);
-    };
-
-    // automatically clicks submit button after time expires and then resets form
-    useEffect(() => {
-        if (remainingTime === 0) {
-            const button = document.getElementById("submit-button");
-            const resetButton = document.getElementById("reset-button");
-            if (button) {
-                button.click();
-            }
-
-            setTimeout(() => {
-                resetButton.click();
-            }, 1000);
-        }
-    }, [remainingTime]);
-
-    // to check whether the user has started typing his/her story or not
-    const handleTyping = () => {
-        if (!timerStarted) {
-            setIsTyping(true);
-            setTimerStarted(true);
-            // setTimer(setTimeout(handleTimeout, 5000));
-            // setRemainingTime(5);
-        }
-    };
-
-    const handleTimeout = () => {
-        console.log("Timer expired!");
-        setIsTyping(false);
-    };
-
-    if (remainingTime === 0) {
-        console.log("Timer expired!");
+  const onFinish = (values) => {
+    setDisable(true);
+    if (currentUser?.email) {
+      const payload = {
+        title: values.title,
+        story: [
+          {
+            content: values.story,
+          },
+        ],
+        writerName: currentUser?.username,
+      };
+      setIsTyping(false);
+      resetData();
+      dispatch(
+        setStoryData(
+          {
+            title: payload?.title,
+            story: payload?.story,
+            email: currentUser?.email,
+            username: payload.writerName,
+          },
+          navigate("/")
+        )
+      );
+    } else {
+      navigate("/sign-in");
     }
+  };
 
-    const resetData = () => {
-        setIsTyping(false);
-        setTimerStarted(false);
-        // setRemainingTime(5);
-        setTitle(titleData);
-        // setStoryText('')
-        setTimeout(() => {
-            setRemainingTime(60);
-            form.resetFields();
-        }, 2000);
-        // form.resetFields();
-    };
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
-    useEffect(() => {
-        if (remainingTime > 0 && isTyping) {
-            const countdown = setInterval(() => {
-                setRemainingTime((prevTime) => prevTime - 1);
-            }, 1000);
+  if (remainingTime === 0) {
+    console.log("Timer expired!");
+  }
 
-            return () => {
-                clearInterval(countdown);
-            };
-        }
-    }, [remainingTime, isTyping]);
+  const resetData = useCallback(() => {
+    setTimeout(() => {
+      form.resetFields();
+      setRemainingTime(60);
+      setDisable(false);
+    }, 2000);
+    setIsTyping(false);
+  }, [form]);
 
-    return (
-        <section id="addStory-jsx">
-            <div className="main-container">
-                {!currentUser?.email ? (
-                    <h1 className="text-7xl text-red-500 mt-80">
-                        {" "}
-                        Please Sign In before adding story
-                    </h1>
-                ) : (
-                    <>
-                        <div className="inner-container">
-                            <p className="header-container">
-                                {" "}
-                                Timer will start as soon as you start typing
-                                your story
-                            </p>
+  useEffect(() => {
+    if (remainingTime > 0 && isTyping) {
+      const countdown = setInterval(() => {
+        setRemainingTime((prevTime) => prevTime - 1);
+      }, 1000);
 
-                            <label className="title-container">
-                                Add New Story
-                            </label>
+      return () => {
+        clearInterval(countdown);
+      };
+    }
+  }, [remainingTime, isTyping]);
 
-                            {/* FORM */}
+  // automatically clicks submit button after time expires and then resets form
+  useEffect(() => {
+    if (remainingTime === 0) {
+      form.submit();
+      resetData();
+    }
+  }, [form, remainingTime, resetData]);
 
-                            <Form
-                                name="basic"
-                                form={form}
-                                labelCol={{
-                                    span: 8,
-                                }}
-                                wrapperCol={{
-                                    span: 16,
-                                }}
-                                style={{
-                                    maxWidth: 600,
-                                }}
-                                initialValues={{
-                                    remember: true,
-                                    title: titleData ? title : "",
-                                }}
-                                disabled={currentUser?.email ? false : true}
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
-                                autoComplete="off"
-                            >
-                                <Form.Item
-                                    label="Title"
-                                    name="title"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                "Please enter your title here!",
-                                        },
-                                    ]}
-                                >
-                                    {/* <Input /> */}
-                                    <TextArea
-                                        className="w-96 h-48"
-                                        placeholder="Please enter your title here!"
-                                        autoSize={{
-                                            minRows: 2,
-                                            maxRows: 10,
-                                        }}
-                                        disabled={titleData ? true : false}
-                                        onChange={handleTitleChange}
-                                    />
-                                </Form.Item>
+  const formStyleProp = {
+    labelCol: {
+      span: 8,
+    },
+    style: {
+      maxWidth: 600,
+    },
+  };
 
-                                <Form.Item
-                                    label="Story"
-                                    name="story"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                "Please enter your story here!",
-                                        },
-                                    ]}
-                                >
-                                    {/* <Input.Password /> */}
-                                    <TextArea
-                                        className="w-96 h-48"
-                                        placeholder="Enter Your Story Here"
-                                        disabled={
-                                            title === undefined ? true : false
-                                        }
-                                        autoSize={{
-                                            minRows: 2,
-                                            maxRows: 10,
-                                        }}
-                                        onPaste={(e) => e.preventDefault()}
-                                        // onCopy={(e) => e.preventDefault()}
-                                        // onCut={(e) => e.preventDefault()}
-                                        // value={storyText}    this is causing some problem to be checked
-                                        onChange={handleTyping}
-                                    />
-                                </Form.Item>
+  const componentProps = {
+    isTyping,
+    isDisable,
+    remainingTime,
+    setIsTyping,
+  };
 
-                                <Form.Item
-                                    wrapperCol={{
-                                        offset: 8,
-                                        span: 16,
-                                    }}
-                                >
-                                    <div className="flex justify-center mt-8">
-                                        <Button
-                                            type="primary"
-                                            htmlType="submit"
-                                            id="submit-button"
-                                            size="large"
-                                            className="bg-blue-600 hover:bg-blue-500 transition duration-300"
-                                        >
-                                            Add Story, button to be removed
-                                        </Button>
-                                    </div>
-                                    <div className="flex justify-center mt-8">
-                                        <Button
-                                            type="primary"
-                                            size="large"
-                                            id="reset-button"
-                                            htmlType="button"
-                                            className="bg-blue-600 hover:bg-blue-500 transition duration-300"
-                                            onClick={resetData}
-                                        >
-                                            Reset
-                                        </Button>
-                                    </div>
-                                </Form.Item>
-                            </Form>
-                            {/* FORM END */}
+  const formProps = {
+    name: "basic",
+    form,
+    onFinish,
+    onFinishFailed,
+    initialValues: {
+      title: titleData || "",
+    },
+    autoComplete: "off",
+    ...formStyleProp,
+  };
 
-                            <div>
-                                {remainingTime > 0 ? (
-                                    <p className="remaining-time-running">
-                                        {" "}
-                                        Time Remaining: {
-                                            remainingTime
-                                        } seconds{" "}
-                                    </p>
-                                ) : (
-                                    <p className="remaining-time-ended">
-                                        {" "}
-                                        Time Expired{" "}
-                                    </p>
-                                )}
-                            </div>
-                            {remainingTime > 0 ? (
-                                <p></p>
-                            ) : (
-                                <p className="remaining-time-ended">Your story is submitted..</p>
-                            )}
+  return <FromContainer formProps={formProps} componentProp={componentProps} />;
+}
 
-                            <p className="info-container">
-                                The Story will auto Submit when timer reaches to
-                                zero.
-                            </p>
-                        </div>
-                    </>
-                )}
-            </div>
-        </section>
-    );
+function FromContainer({ formProps, componentProp }) {
+  const { isTyping, setIsTyping, isDisable, remainingTime } = componentProp;
+  return (
+    <div className="add-story-wrapper">
+      <div className="add-story-left-container">
+        <Form className="w-80" {...formProps}>
+          <Form.Item
+            name="title"
+            rules={[
+              {
+                required: true,
+                message: () => (
+                  <>
+                    What should I call this 🤨 <strong>A tragedy</strong>
+                  </>
+                ),
+              },
+            ]}
+          >
+            <Input.TextArea
+              rows={2}
+              disabled={isDisable}
+              onChange={() => setIsTyping(true)}
+              placeholder="Choose your title"
+              style={{
+                resize: "none",
+              }}
+            />
+          </Form.Item>
+          <Form.Item
+            name="story"
+            rules={[
+              {
+                required: isTyping,
+                message: "Story without a story ehhh!!!",
+              },
+            ]}
+          >
+            <Input.TextArea
+              className="h-48"
+              placeholder="Tell your story here...."
+              cols={60}
+              rows={18}
+              disabled={!isTyping || isDisable}
+              onPaste={(e) => e.preventDefault()}
+              style={{
+                resize: "none",
+              }}
+            />
+          </Form.Item>
+          <ButtonComponent />
+        </Form>
+      </div>
+      <div className="add-story-right-container">
+        <div>
+          <p>Tell your story in words, But time is going.</p>
+        </div>
+        <div>
+          <p>Timer will start as soon as you start typing your story</p>
+        </div>
+        <div>
+          <span>Timer: </span>
+          <span className={remainingTime > 20 ? "good" : "late"}>
+            {remainingTime}s
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ButtonComponent() {
+  return (
+    <div className="control-btn-container">
+      <Button className="w-full" type="primary" htmlType="submit">
+        Add
+      </Button>
+      <Button type="default">Want more time ?</Button>
+    </div>
+  );
 }
 
 export default AddStory;
