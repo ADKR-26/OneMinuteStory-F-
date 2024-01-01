@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import TitleCard from "../../components/Card/TitleCard";
-import { useEffect } from "react";
 
 import "./viewTile.scss";
 
@@ -10,11 +9,11 @@ function ViewTile() {
   );
 
   const renderTile = (data) => {
-    return data?.map((tile) => {
+    return data?.map((tile, idx) => {
       return (
         <TitleCard
-          key={tile.id}
-          id={tile.id}
+          key={`tile-${idx}`}
+          id={tile._id}
           title={tile.title}
           story={tile.story}
           author={tile.author}
@@ -24,16 +23,12 @@ function ViewTile() {
     });
   };
 
-  useEffect(() => {
-    // console.log("");
-  }, [titleData]);
-
   return (
     <div>
       <p className="text-5xl flex justify-center mb-20 mt-20 font-bold">
         STORY DATA
       </p>
-      {typeof titleData == Array && renderTile(titleData)}
+      {renderTile(titleData)}
     </div>
   );
 }

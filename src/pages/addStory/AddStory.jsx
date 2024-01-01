@@ -15,7 +15,7 @@ function AddStory({ titleData }) {
   const navigate = useNavigate();
   const [remainingTime, setRemainingTime] = useState(60);
   const [isDisable, setDisable] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(titleData !== "");
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -52,18 +52,27 @@ function AddStory({ titleData }) {
     console.log("Failed:", errorInfo);
   };
 
+  const titleChangeHandler = (e) => {
+    setIsTyping(e.target.value !== "");
+  };
+
   if (remainingTime === 0) {
     console.log("Timer expired!");
   }
 
   const resetData = useCallback(() => {
-    setTimeout(() => {
-      form.resetFields();
-      setRemainingTime(60);
-      setDisable(false);
-    }, 2000);
-    setIsTyping(false);
-  }, [form]);
+    if (titleData !== "") {
+      form.resetFields(["story"]);
+      setIsTyping(true);
+    } else {
+      setTimeout(() => {
+        form.resetFields();
+        setIsTyping(false);
+      }, 1000);
+    }
+    setDisable(false);
+    setRemainingTime(60);
+  }, [form, titleData]);
 
   useEffect(() => {
     if (remainingTime > 0 && isTyping) {
@@ -99,6 +108,8 @@ function AddStory({ titleData }) {
     isDisable,
     remainingTime,
     setIsTyping,
+    titleChangeHandler,
+    resetData,
   };
 
   const formProps = {
@@ -117,7 +128,8 @@ function AddStory({ titleData }) {
 }
 
 function FromContainer({ formProps, componentProp }) {
-  const { isTyping, setIsTyping, isDisable, remainingTime } = componentProp;
+  const { isTyping, isDisable, remainingTime, titleChangeHandler, resetData } =
+    componentProp;
   return (
     <div className="add-story-wrapper">
       <div className="add-story-left-container">
@@ -129,7 +141,7 @@ function FromContainer({ formProps, componentProp }) {
                 required: true,
                 message: () => (
                   <>
-                    What should I call this 🤨 <strong>A tragedy</strong>
+                    What should I call this 🤨 <strong>A tragedy !!</strong>
                   </>
                 ),
               },
@@ -138,7 +150,7 @@ function FromContainer({ formProps, componentProp }) {
             <Input.TextArea
               rows={2}
               disabled={isDisable}
-              onChange={() => setIsTyping(true)}
+              onChange={titleChangeHandler}
               placeholder="Choose your title"
               style={{
                 resize: "none",
@@ -166,7 +178,7 @@ function FromContainer({ formProps, componentProp }) {
               }}
             />
           </Form.Item>
-          <ButtonComponent />
+          <ButtonComponent resetData={resetData} />
         </Form>
       </div>
       <div className="add-story-right-container">
@@ -187,13 +199,15 @@ function FromContainer({ formProps, componentProp }) {
   );
 }
 
-function ButtonComponent() {
+function ButtonComponent({ resetData }) {
   return (
     <div className="control-btn-container">
       <Button className="w-full" type="primary" htmlType="submit">
         Add
       </Button>
-      <Button type="default">Want more time ?</Button>
+      <Button onClick={resetData} type="default">
+        Want more time ?
+      </Button>
     </div>
   );
 }
