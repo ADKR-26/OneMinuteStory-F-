@@ -302,3 +302,134 @@
     }
   }
 }
+
+.pt-20 {
+    display: flex;
+    justify-content: center;
+}
+
+.add-story-wrapper {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    height: 500px;
+    width: 900px;
+    border-radius: 8px;
+}
+
+.add-story-wrapper .add-story-left-container {
+    padding: 15px;
+    border-right: 1px solid rgba(30, 59, 138, 0.37);
+}
+
+.add-story-wrapper .add-story-left-container .control-btn-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+}
+
+.control-btn-container .ant-btn-primary {
+    background: rgb(28, 65, 167);
+}
+
+.control-btn-container .ant-btn-primary:hover {
+    background: rgb(27 78 221);
+}
+
+.add-story-wrapper .add-story-right-container {
+    padding: 10px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.add-story-right-container div {
+    margin-bottom: 8px;
+}
+
+.add-story-right-container div:nth-child(1) > p {
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 400;
+    word-wrap: break-word;
+    padding-bottom: 10px;
+}
+
+.add-story-right-container div:nth-child(2) > p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgb(255, 0, 0);
+}
+
+.add-story-right-container div:nth-child(3) span:nth-child(2) {
+    font-size: 1rem;
+    padding-left: 5px;
+    font-weight: 600;
+}
+
+.add-story-right-container {
+    font-size: 1.4rem;
+    .good {
+        color: #4ee114;
+        padding-left: 0px !important;
+    }
+
+    .late {
+        color: red;
+        position: absolute;
+        animation-name: shake;
+        animation-duration: 0.4s;
+        animation-delay: 0.5s;
+        animation-direction: normal;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes shake {
+        0% {
+            transform: translateX(0px);
+        }
+        20% {
+            transform: translateX(-3px);
+        }
+        40% {
+            transform: translateX(3px);
+        }
+        60% {
+            transform: translateX(-3px);
+        }
+        100% {
+            transform: translateX(0px);
+        }
+    }
+}
+
+.add-story-wrapper .ant-input:focus input::after {
+    content: "Hello";
+    display: block;
+}
+
+.add-story-wrapper .ant-input:focus::after {
+    content: "Your message here";
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+}
+
+@media screen and (max-width: 768px) {
+    .add-story-wrapper {
+        margin-top: 0;
+        flex-direction: column-reverse;
+        height: max-content;
+
+        .add-story-left-container {
+            border: none;
+
+            .ant-form {
+                width: 100%;
+                padding-inline: 20px;
+            }
+        }
+    }
+}
