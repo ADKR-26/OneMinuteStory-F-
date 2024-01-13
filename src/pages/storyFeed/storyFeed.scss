@@ -35,4 +35,22 @@
         border: 1px solid #ccc; /* Add a border to each story */
         border-radius: 4px;
     }
+
+    .storyFeed-paragraph {
+        width: 700px;
+    }
+
+    .add-story-wrapper {
+        margin-top: 10px !important;
+    }
+
+    .para-switch-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        .para-switch {
+            background-color: #ccc;
+        }
+    }
 }

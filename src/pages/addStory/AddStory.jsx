@@ -152,8 +152,9 @@ function AddStory({ titleData }) {
                     </h1>
                 ) : (
                     <>
-                        <div className="inner-container">
-                            <p className="header-container">
+                        <div className="add-story-wrapper">
+                            <div className="add-story-left-container">
+                                {/* <p className="add-story-left-container">
                                 {" "}
                                 Timer will start as soon as you start typing
                                 your story
@@ -161,44 +162,60 @@ function AddStory({ titleData }) {
 
                             <label className="title-container">
                                 Add New Story
-                            </label>
+                            </label> */}
 
-                            {/* FORM */}
+                                {/* FORM */}
 
-                            <Form
-                                name="basic"
-                                form={form}
-                                labelCol={{
-                                    span: 8,
-                                }}
-                                wrapperCol={{
-                                    span: 16,
-                                }}
-                                style={{
-                                    maxWidth: 600,
-                                }}
-                                initialValues={{
-                                    remember: true,
-                                    title: titleData ? title : "",
-                                }}
-                                disabled={currentUser?.email ? false : true}
-                                onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
-                                autoComplete="off"
-                            >
-                                <Form.Item
-                                    label="Title"
-                                    name="title"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                "Please enter your title here!",
-                                        },
-                                    ]}
+                                <Form
+                                    name="basic"
+                                    form={form}
+                                    labelCol={{
+                                        span: 8,
+                                    }}
+                                    wrapperCol={{
+                                        span: 16,
+                                    }}
+                                    style={{
+                                        maxWidth: 600,
+                                    }}
+                                    initialValues={{
+                                        remember: true,
+                                        title: titleData ? title : "",
+                                    }}
+                                    disabled={currentUser?.email ? false : true}
+                                    onFinish={onFinish}
+                                    onFinishFailed={onFinishFailed}
+                                    autoComplete="off"
                                 >
-                                    {/* <Input /> */}
-                                    <TextArea
+                                    <Form.Item
+                                        // label="Title"
+                                        name="title"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: () => (
+                                                    <>
+                                                        What should I call this
+                                                        🤨{" "}
+                                                        <strong>
+                                                            A tragedy !!
+                                                        </strong>
+                                                    </>
+                                                ),
+                                            },
+                                        ]}
+                                    >
+                                        {/* <Input /> */}
+                                        <Input.TextArea
+                                            rows={2}
+                                            disabled={titleData ? true : false}
+                                            onChange={handleTitleChange}
+                                            placeholder="Choose your title"
+                                            style={{
+                                                resize: "none",
+                                            }}
+                                        />
+                                        {/* <TextArea
                                         className="w-96 h-48"
                                         placeholder="Please enter your title here!"
                                         autoSize={{
@@ -207,22 +224,38 @@ function AddStory({ titleData }) {
                                         }}
                                         disabled={titleData ? true : false}
                                         onChange={handleTitleChange}
-                                    />
-                                </Form.Item>
+                                    /> */}
+                                    </Form.Item>
 
-                                <Form.Item
-                                    label="Story"
-                                    name="story"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                "Please enter your story here!",
-                                        },
-                                    ]}
-                                >
-                                    {/* <Input.Password /> */}
-                                    <TextArea
+                                    <Form.Item
+                                        // label="Story"
+                                        name="story"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    "Story without a story ehhh!!!",
+                                            },
+                                        ]}
+                                    >
+                                        {/* <Input.Password /> */}
+                                        <Input.TextArea
+                                            className="h-48"
+                                            placeholder="Tell your story here...."
+                                            cols={60}
+                                            rows={18}
+                                            disabled={
+                                                title === undefined
+                                                    ? true
+                                                    : false
+                                            }
+                                            onPaste={(e) => e.preventDefault()}
+                                            style={{
+                                                resize: "none",
+                                            }}
+                                            onChange={handleTyping}
+                                        />
+                                        {/* <TextArea
                                         className="w-96 h-48"
                                         placeholder="Enter Your Story Here"
                                         disabled={
@@ -237,43 +270,85 @@ function AddStory({ titleData }) {
                                         // onCut={(e) => e.preventDefault()}
                                         // value={storyText}    this is causing some problem to be checked
                                         onChange={handleTyping}
-                                    />
-                                </Form.Item>
-
-                                <Form.Item
-                                    wrapperCol={{
-                                        offset: 8,
-                                        span: 16,
-                                    }}
-                                >
-                                    <div className="flex justify-center mt-8">
+                                    /> */}
+                                    </Form.Item>
+                                    <div className="control-btn-container">
                                         <Button
+                                            className="w-full"
                                             type="primary"
                                             htmlType="submit"
                                             id="submit-button"
-                                            size="large"
-                                            className="bg-blue-600 hover:bg-blue-500 transition duration-300"
                                         >
-                                            Add Story, button to be removed
+                                            Add
                                         </Button>
-                                    </div>
-                                    <div className="flex justify-center mt-8">
                                         <Button
-                                            type="primary"
-                                            size="large"
-                                            id="reset-button"
-                                            htmlType="button"
-                                            className="bg-blue-600 hover:bg-blue-500 transition duration-300"
                                             onClick={resetData}
+                                            type="default"
                                         >
                                             Reset
                                         </Button>
                                     </div>
-                                </Form.Item>
-                            </Form>
-                            {/* FORM END */}
 
-                            <div>
+                                    {/* <Form.Item
+                                        wrapperCol={{
+                                            offset: 8,
+                                            span: 16,
+                                        }}
+                                    >
+                                        <div className="flex justify-center mt-8">
+                                            <Button
+                                                type="primary"
+                                                htmlType="submit"
+                                                id="submit-button"
+                                                size="large"
+                                                className="bg-blue-600 hover:bg-blue-500 transition duration-300"
+                                            >
+                                                Add Story, button to be removed
+                                            </Button>
+                                        </div>
+                                        <div className="flex justify-center mt-8">
+                                            <Button
+                                                type="primary"
+                                                size="large"
+                                                id="reset-button"
+                                                htmlType="button"
+                                                className="bg-blue-600 hover:bg-blue-500 transition duration-300"
+                                                onClick={resetData}
+                                            >
+                                                Reset
+                                            </Button>
+                                        </div>
+                                    </Form.Item> */}
+                                </Form>
+                            </div>
+
+                            {/* FORM END */}
+                            <div className="add-story-right-container">
+                                <div>
+                                    <p>
+                                        Tell your story in words, But time is
+                                        going.
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        Timer will start as soon as you start
+                                        typing your story
+                                    </p>
+                                </div>
+                                <div>
+                                    <span>Timer: </span>
+                                    <span
+                                        className={
+                                            remainingTime > 20 ? "good" : "late"
+                                        }
+                                    >
+                                        {remainingTime}s
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* <div>
                                 {remainingTime > 0 ? (
                                     <p className="remaining-time-running">
                                         {" "}
@@ -291,13 +366,15 @@ function AddStory({ titleData }) {
                             {remainingTime > 0 ? (
                                 <p></p>
                             ) : (
-                                <p className="remaining-time-ended">Your story is submitted..</p>
+                                <p className="remaining-time-ended">
+                                    Your story is submitted..
+                                </p>
                             )}
 
                             <p className="info-container">
                                 The Story will auto Submit when timer reaches to
                                 zero.
-                            </p>
+                            </p> */}
                         </div>
                     </>
                 )}
