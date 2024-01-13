@@ -46,32 +46,24 @@
     }
 
     .button-container button {
-        font-size: 1.5rem /* 24px */;
+        font-size: 1.2rem /* 24px */;
         line-height: 2rem /* 32px */;
-        height: 5rem /* 80px */;
+        height: fit-content;
+        padding-block: 8px;
+        padding-inline: 21px;
         --tw-bg-opacity: 1;
         background-color: rgb(30 58 138 / var(--tw-bg-opacity));
         --tw-text-opacity: 1;
         color: rgb(255 255 255 / var(--tw-text-opacity));
         text-transform: uppercase;
         font-weight: 600;
-        padding-top: 0.5rem /* 8px */;
-        padding-bottom: 0.5rem /* 8px */;
-        border-radius: 1.5rem /* 24px */;
-        --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-            0 8px 10px -6px rgb(0 0 0 / 0.1);
-        --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color),
-            0 8px 10px -6px var(--tw-shadow-color);
-        box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-            var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-        transform: translate(var(--tw-translate-x), var(--tw-translate-y))
-            rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
-            skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
-            scaleY(var(--tw-scale-y));
+        border-radius: 8px /* 24px */;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     }
 
     .button-container button:hover {
         --tw-translate-y: -0.5rem /* -8px */;
+        border-color: #fff;
         transform: translate(var(--tw-translate-x), var(--tw-translate-y))
             rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
             skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
@@ -101,6 +93,17 @@
 
         .button-container button:hover {
             --tw-translate-y: -0.2rem; /* Further reduce translate for smaller screens */
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #homepage-jsx {
+        padding-inline: 32px;
+        overflow-x: hidden;
+        .description,
+        .warning-container {
+            text-align: justify;
         }
     }
 }
