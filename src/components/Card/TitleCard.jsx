@@ -1,4 +1,4 @@
-import { Button, Card } from "antd";
+import { Button, Card, Popconfirm, message } from "antd";
 import { NavLink } from "react-router-dom";
 import {
     actionSetTitleId,
@@ -6,9 +6,9 @@ import {
     getStoryData,
 } from "../../store/action";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 
-import './titleCard.scss';
+import "./titleCard.scss";
 
 function TitleCard({ titleData, id, email, author }) {
     const currentUser = useSelector(
@@ -29,11 +29,29 @@ function TitleCard({ titleData, id, email, author }) {
     const deleteStory = (id) => {
         dispatch(deleteStoryData(id));
 
-        setTimeout(() => {              //TODO: Need to find a different way to rerender the data
+        setTimeout(() => {
+            //TODO: Need to find a different way to rerender the data
             dispatch(getStoryData());
         }, 500);
-        // window.location.reload();          //! will reload / re-render when data is deleted not working
     };
+
+    const confirm = (e) => {
+        console.log(e);
+        deleteStory(id);
+        message.success("Story Deleted !!");
+    };
+
+    // const confirm = () =>
+    //     new Promise((resolve) => {
+    //         setTimeout(() => {
+    //             message.success("Story Deleted");
+    //         }, 3000);
+    //     });
+
+    // const cancel = (e) => {
+    //     console.log(e);
+    //     message.error("Click on No");
+    // };
 
     return (
         <div className="flex justify-center">
@@ -54,10 +72,29 @@ function TitleCard({ titleData, id, email, author }) {
                 }}
             >
                 {currentUser?.email === email ? (
-                    <DeleteOutlined
-                        className="absolute top-0 right-1 cursor-pointer text-2xl text-red-500"
-                        onClick={() => deleteStory(id)}
-                    />
+                    // <DeleteOutlined
+                    //     className="absolute top-0 right-1 cursor-pointer text-2xl text-red-500"
+                    //     onClick={() => deleteStory(id)}
+                    // />
+
+                    <Popconfirm
+                        title="Delete the task"
+                        description="Are you sure to delete this task?"
+                        onConfirm={confirm}
+                        // onCancel={cancel}
+                        okText={
+                            <span className="text-black font-semibold">
+                                Yes
+                            </span>
+                        }
+                        cancelText={
+                            <span className="text-red-500 font-semibold">
+                                No
+                            </span>
+                        }
+                    >
+                        <DeleteOutlined className="absolute top-0 right-1 cursor-pointer text-2xl text-red-500" />
+                    </Popconfirm>
                 ) : (
                     ""
                 )}
