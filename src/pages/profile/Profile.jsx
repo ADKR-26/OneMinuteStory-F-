@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState, useEffect } from "react";
 import {
     getDownloadURL,
@@ -7,8 +7,12 @@ import {
     uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../../../firebase";
+import { updateUser } from "../../store/action";
 
 export default function Profile() {
+
+    const dispatch = useDispatch();
+
     const currentUser = useSelector(
         (state) => state?.oneMinuteStory?.currentUser?.data
     );
@@ -51,10 +55,36 @@ export default function Profile() {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        dispatch(updateUser(formData.username, formData.email, formData.profilePicture, formData.password, currentUser._id))
+
+        console.log("Form Data", formData);
+        
+
+        // try {
+        //     const res = await fetch(
+        //         `http://localhost:3000/OMS-api/user/update/${currentUser._id}`,
+        //         {
+        //             method: "POST",
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //             body: JSON.stringify(formData),
+        //         }
+        //     );
+        //     const data = await res.json();
+        //     console.log("DATA", data);
+        // } catch (error) {
+        //     console.error("Error during fetch:", error);
+        // }
+    };
+
     return (
         <div className="p-3 max-w-lg mx-auto">
             <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
-            <form className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <input
                     type="file"
                     ref={fileRef}

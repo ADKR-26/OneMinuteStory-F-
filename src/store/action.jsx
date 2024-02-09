@@ -14,6 +14,7 @@ import {
     SIGN_UP_USER_REQUEST,
     SIGN_UP_USER_SUCCESS,
     SIGN_UP_USER_FAILURE,
+    UPDATE_USER
 } from "./action-types";
 
 export const actionGetStoryData = (data) => ({
@@ -50,6 +51,11 @@ export const actionSignUpUserGoogle = (data) => ({
     type: SIGN_UP_GOOGLE,
     payload: data,
 });
+
+export const actionUpdateUser = (data) => ({
+    type: UPDATE_USER,
+    payload: data
+})
 
 export const actionSetTitleId = (data) => ({
     // console.log("DATA", data);
@@ -231,6 +237,38 @@ export function signUpUserGoogle(name, email, photo) {
                     const data = error.response;
                     dispatch(actionSignUpUserGoogle(data));
                     console.log("Sign Up google error", error);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+}
+
+export function updateUser(
+    username,
+    email,
+    profilePicture,
+    password,
+    currentUserID
+) {
+    console.log("DATAAAAAA", email);
+    return (dispatch) => {
+        try {
+            axios
+                .post(`${url}/OMS-api/user/update/${currentUserID}`, {
+                    username,
+                    email,
+                    profilePicture,
+                    password,
+                })
+                .then((response) => {
+                    dispatch(actionUpdateUser(response));
+                    console.log("Response", response);
+                })
+                .catch((error) => {
+                    // const data = error.response;
+                    // dispatch(actionSignInUserGoogle(data));
+                    console.log("Update User Error", error.message);
                 });
         } catch (error) {
             console.log(error);
