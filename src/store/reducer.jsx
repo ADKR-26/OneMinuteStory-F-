@@ -9,6 +9,7 @@ import {
     SIGN_UP_USER_REQUEST,
     SIGN_UP_USER_SUCCESS,
     SIGN_UP_USER_FAILURE,
+    UPDATE_USER
 } from "./action-types";
 
 const initialState = {
@@ -35,6 +36,9 @@ const storyReducer = (state = initialState, action) => {
 
         case SET_TITLE_ID:
             return { ...state, titleId: action.payload };
+
+        case UPDATE_USER:
+            return { ...state, currentUser: action.payload };
 
         case SIGN_IN:
             return { ...state, currentUser: action.payload };
