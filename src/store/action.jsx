@@ -14,7 +14,9 @@ import {
     SIGN_UP_USER_REQUEST,
     SIGN_UP_USER_SUCCESS,
     SIGN_UP_USER_FAILURE,
-    UPDATE_USER
+    UPDATE_USER,
+    DELETE_USER,
+    SIGNOUT_USER
 } from "./action-types";
 
 export const actionGetStoryData = (data) => ({
@@ -54,8 +56,18 @@ export const actionSignUpUserGoogle = (data) => ({
 
 export const actionUpdateUser = (data) => ({
     type: UPDATE_USER,
-    payload: data
-})
+    payload: data,
+});
+
+export const actionSignOut = (data) => ({
+    type: SIGNOUT_USER,
+    payload: data,
+});
+
+export const actionDeleteUserData = (data) => ({
+    type: DELETE_USER,
+    payload: data,
+});
 
 export const actionSetTitleId = (data) => ({
     // console.log("DATA", data);
@@ -269,6 +281,46 @@ export function updateUser(
                     // const data = error.response;
                     // dispatch(actionSignInUserGoogle(data));
                     console.log("Update User Error", error.message);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+}
+
+export function deleteUser(currentUserID) {
+    return (dispatch) => {
+        try {
+            axios
+                .delete(`${url}/OMS-api/user/delete/${currentUserID}`)
+                .then((response) => {
+                    dispatch(actionDeleteUserData(response));
+                    console.log("User Deleted", response);
+                })
+                .catch((error) => {
+                    const data = error.response;
+                    dispatch(actionDeleteUserData(data));
+                    console.log("Error in delete User", error);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+}
+
+export function signOutUser() {
+    return (dispatch) => {
+        try {
+            axios
+                .get(`${url}/OMS-api/auth/signout`)
+                .then((response) => {
+                    dispatch(actionSignOut(response));
+                    console.log("User Deleted", response);
+                })
+                .catch((error) => {
+                    const data = error.response;
+                    dispatch(actionSignOut(data));
+                    console.log("Error in delete User", error);
                 });
         } catch (error) {
             console.log(error);
