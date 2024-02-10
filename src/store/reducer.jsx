@@ -11,7 +11,8 @@ import {
     SIGN_UP_USER_FAILURE,
     UPDATE_USER,
     DELETE_USER,
-    SIGNOUT_USER
+    SIGNOUT_USER,
+    UPDATE_USER_ERROR
 } from "./action-types";
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
     loading: false,
     error: false,
     user: null,
+    updateError: false
 };
 
 const storyReducer = (state = initialState, action) => {
@@ -40,7 +42,12 @@ const storyReducer = (state = initialState, action) => {
             return { ...state, titleId: action.payload };
 
         case UPDATE_USER:
-            return { ...state, currentUser: action.payload };
+            console.log("HERE", action);
+            return { ...state, currentUser: action.payload, updateError: action.updateError };
+
+        case UPDATE_USER_ERROR:
+            console.log("HERE", action);
+            return { ...state, updateError: action.payload };
         
         case DELETE_USER:
             return { ...state, currentUser: null };

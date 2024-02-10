@@ -107,10 +107,11 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            max-width: 25rem;
         }
 
         .header-container {
-            font-size: 1.2rem; /* Further reduce font size for smaller screens */
+            font-size: 2.2rem; /* Further reduce font size for smaller screens */
             margin-top: 1rem; /* Further reduce margin for smaller screens */
             margin-bottom: 1rem; /* Further reduce margin for smaller screens */
             padding: 0 3rem 2rem;
@@ -183,7 +184,7 @@
     display: flex;
     justify-content: center;
     height: 500px;
-    width: 900px;
+    // width: 900px;
     border-radius: 8px;
 }
 
@@ -290,6 +291,7 @@
 @media screen and (max-width: 768px) {
     .add-story-wrapper {
         margin-top: 0;
+        // margin-left: 30rem;
         flex-direction: column-reverse;
         height: max-content;
 

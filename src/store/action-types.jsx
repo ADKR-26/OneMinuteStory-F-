@@ -12,3 +12,4 @@ export const SIGN_UP_USER_FAILURE = "SIGN_UP_USER_FAILURE";
 export const UPDATE_USER = "UPDATE_USER";
 export const DELETE_USER = "DELETE_USER";
 export const SIGNOUT_USER = "SIGNOUT_USER";
+export const UPDATE_USER_ERROR = "UPDATE_USER_ERROR";

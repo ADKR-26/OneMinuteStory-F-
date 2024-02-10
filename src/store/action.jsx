@@ -16,7 +16,8 @@ import {
     SIGN_UP_USER_FAILURE,
     UPDATE_USER,
     DELETE_USER,
-    SIGNOUT_USER
+    SIGNOUT_USER,
+    UPDATE_USER_ERROR
 } from "./action-types";
 
 export const actionGetStoryData = (data) => ({
@@ -54,8 +55,14 @@ export const actionSignUpUserGoogle = (data) => ({
     payload: data,
 });
 
-export const actionUpdateUser = (data) => ({
+export const actionUpdateUser = (data, error) => ({
     type: UPDATE_USER,
+    payload: data,
+    updateError: error
+});
+
+export const actionUpdateUserError = (data) => ({
+    type: UPDATE_USER_ERROR,
     payload: data,
 });
 
@@ -274,10 +281,13 @@ export function updateUser(
                     password,
                 })
                 .then((response) => {
-                    dispatch(actionUpdateUser(response));
+                    const updateError = false;
+                    dispatch(actionUpdateUser(response, updateError));
                     console.log("Response", response);
                 })
                 .catch((error) => {
+                    const updateError = true;
+                    dispatch(actionUpdateUserError(updateError));
                     // const data = error.response;
                     // dispatch(actionSignInUserGoogle(data));
                     console.log("Update User Error", error.message);
