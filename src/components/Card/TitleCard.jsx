@@ -1,4 +1,5 @@
 import { Button, Card, Popconfirm, message } from "antd";
+import PropTypes from 'prop-types';
 import { NavLink } from "react-router-dom";
 import {
     actionSetTitleId,
@@ -15,10 +16,10 @@ import {
 } from "@ant-design/icons";
 
 import "./titleCard.scss";
-import { useState } from "react";
+// import { useState } from "react";
 
-function TitleCard({ titleData, id, email, author, likes }) {
-    const [liked, setLiked] = useState(false);
+function TitleCard({ titleData, id, email, author, likes, likedBy }) {
+    // const [liked, setLiked] = useState(false);
 
     const currentUser = useSelector(
         (state) => state?.oneMinuteStory?.currentUser?.data
@@ -26,7 +27,7 @@ function TitleCard({ titleData, id, email, author, likes }) {
 
     // console.log(author);
 
-    // console.log("EMAIL", email);
+    console.log("LIKED BY", likedBy);
 
     const dispatch = useDispatch();
 
@@ -54,7 +55,7 @@ function TitleCard({ titleData, id, email, author, likes }) {
         try {
             dispatch(likeStory(id, email));
             // dispatch(getStoryData());
-            setLiked(!liked);
+            // setLiked(!liked);
             console.log("CLICKED", id, email);
         } catch (error) {
             console.log("Error in liking Story");
@@ -69,7 +70,7 @@ function TitleCard({ titleData, id, email, author, likes }) {
                     {currentUser?.email === email ? (
                         <Popconfirm
                             title="Delete the Story"
-                            description="Are you sure to delete this story?"
+                            description="Are you sure you want to delete this story?"
                             onConfirm={confirm}
                             // onCancel={cancel}
                             okText={
@@ -89,7 +90,7 @@ function TitleCard({ titleData, id, email, author, likes }) {
                         ""
                     )}
 
-                    {liked ? (
+                    {likedBy.includes(currentUser?.email) ? (
                         <HeartFilled
                             onClick={() => likePost(id, currentUser?.email)}
                             className="absolute bottom-6 right-4 cursor-pointer text-2xl text-red-500 "
@@ -132,6 +133,15 @@ function TitleCard({ titleData, id, email, author, likes }) {
             </div>
         </section>
     );
+}
+
+TitleCard.propTypes = {
+    titleData: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    likedBy: PropTypes.arrayOf(PropTypes.string).isRequired, // Ensure likedBy is an array of strings
 }
 
 export default TitleCard;
