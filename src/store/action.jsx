@@ -17,7 +17,7 @@ import {
     UPDATE_USER,
     DELETE_USER,
     SIGNOUT_USER,
-    UPDATE_USER_ERROR
+    UPDATE_USER_ERROR,
 } from "./action-types";
 
 export const actionGetStoryData = (data) => ({
@@ -58,7 +58,7 @@ export const actionSignUpUserGoogle = (data) => ({
 export const actionUpdateUser = (data, error) => ({
     type: UPDATE_USER,
     payload: data,
-    updateError: error
+    updateError: error,
 });
 
 export const actionUpdateUserError = (data) => ({
@@ -334,6 +334,26 @@ export function signOutUser() {
                 });
         } catch (error) {
             console.log(error);
+        }
+    };
+}
+
+export function likeStory(id, email) {
+    return (dispatch) => {
+        try {
+            axios
+                .post(`${url}/api/likedBy/${id}`, { email })
+                .then((response) => {
+                    // Dispatch your action with the response data if needed
+                    dispatch(getStoryData());
+                    console.log("Response", response.data);
+                })
+                .catch((error) => {
+                    // Handle error response
+                    console.log("Error", error);
+                });
+        } catch (error) {
+            console.log("Error", error);
         }
     };
 }

@@ -12,7 +12,7 @@ import {
     UPDATE_USER,
     DELETE_USER,
     SIGNOUT_USER,
-    UPDATE_USER_ERROR
+    UPDATE_USER_ERROR,
 } from "./action-types";
 
 const initialState = {
