@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import OMS from '../../assets/OMS.png';
+import USER_PIC from '../../assets/user.png';
 
 import "./header.scss";
 
@@ -70,7 +71,7 @@ function Header() {
                             >
                                 {currentUser?.email ? (
                                     <img
-                                        src={currentUser.profilePicture}
+                                        src={currentUser.profilePicture || USER_PIC }
                                         alt="profile"
                                         // className="h-7 w-7 rounded-full object-cover"
                                     />

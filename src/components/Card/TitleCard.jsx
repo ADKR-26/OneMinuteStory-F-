@@ -4,18 +4,27 @@ import {
     actionSetTitleId,
     deleteStoryData,
     getStoryData,
+    likeStory,
 } from "../../store/action";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import {
+    DeleteOutlined,
+    HeartOutlined,
+    HeartFilled,
+    QuestionCircleOutlined,
+} from "@ant-design/icons";
 
 import "./titleCard.scss";
+import { useState } from "react";
 
-function TitleCard({ titleData, id, email, author }) {
+function TitleCard({ titleData, id, email, author, likes }) {
+    const [liked, setLiked] = useState(false);
+
     const currentUser = useSelector(
         (state) => state?.oneMinuteStory?.currentUser?.data
     );
 
-    console.log(author);
+    // console.log(author);
 
     // console.log("EMAIL", email);
 
@@ -36,34 +45,31 @@ function TitleCard({ titleData, id, email, author }) {
     };
 
     const confirm = (e) => {
-        console.log(e);
+        // console.log(e);
         deleteStory(id);
         message.success("Story Deleted !!");
+    };
+
+    const likePost = async (id, email) => {
+        try {
+            dispatch(likeStory(id, email));
+            // dispatch(getStoryData());
+            setLiked(!liked);
+            console.log("CLICKED", id, email);
+        } catch (error) {
+            console.log("Error in liking Story");
+        }
     };
 
     return (
         <section id="titleCard-jsx">
             <div className="main-container">
                 {/* Current Stories */}
-                <Card
-                    key={id}
-                    className="card-content"
-                    // style={{
-                    //     display: "flex",
-                    //     justifyContent: "center",
-                    //     alignItems: "center",
-                    //     width: 900,
-                    //     marginBottom: 10,
-                    //     border: "2px solid rgba(150, 150, 150, 1)",
-                    //     boxShadow: "10px 10px rgba(210, 210, 210, 1)",
-                    //     // gap: "20px",
-                    //     marginTop: "20px",
-                    // }}
-                >
+                <Card key={id} className="card-content">
                     {currentUser?.email === email ? (
                         <Popconfirm
-                            title="Delete the task"
-                            description="Are you sure to delete this task?"
+                            title="Delete the Story"
+                            description="Are you sure to delete this story?"
                             onConfirm={confirm}
                             // onCancel={cancel}
                             okText={
@@ -77,11 +83,29 @@ function TitleCard({ titleData, id, email, author }) {
                                 </span>
                             }
                         >
-                            <DeleteOutlined className="absolute top-0 right-1 cursor-pointer text-2xl text-red-500" />
+                            <DeleteOutlined className="absolute top-0 right-4 cursor-pointer text-2xl text-red-500" />
                         </Popconfirm>
                     ) : (
                         ""
                     )}
+
+                    {liked ? (
+                        <HeartFilled
+                            onClick={() => likePost(id, currentUser?.email)}
+                            className="absolute bottom-6 right-4 cursor-pointer text-2xl text-red-500 "
+                        />
+                    ) : (
+                        <HeartOutlined
+                            onClick={() => likePost(id, currentUser?.email)}
+                            className="absolute bottom-6 right-4 cursor-pointer text-2xl text-red-500 "
+                        />
+                    )}
+
+                    <p className="absolute bottom-1 right-6 cursor-pointer text-1xl text-red-500">
+                        {" "}
+                        {likes}{" "}
+                    </p>
+
                     <p className="p-10 text-2xl">
                         <label className="font-bold">Title:</label> {titleData}{" "}
                     </p>

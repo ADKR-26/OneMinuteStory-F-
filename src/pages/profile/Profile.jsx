@@ -9,7 +9,9 @@ import {
 import { app } from "../../../firebase";
 import { deleteUser, signOutUser, updateUser } from "../../store/action";
 import { useNavigate } from "react-router-dom";
+import { Button, Modal } from "antd";
 
+import USER_PIC from "../../assets/user.png";
 import "./profile.scss";
 
 export default function Profile() {
@@ -30,6 +32,18 @@ export default function Profile() {
     const [imageError, setImageError] = useState(false);
     const [formData, setFormData] = useState({});
     const [showUpdated, setShowUpdate] = useState(false);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         if (image) {
@@ -78,8 +92,7 @@ export default function Profile() {
 
         if (updateError === false) {
             setShowUpdate(true);
-        }
-        else {
+        } else {
             setShowUpdate(false);
         }
 
@@ -100,11 +113,9 @@ export default function Profile() {
     };
 
     return (
-        <section id='profile-jsx'>
+        <section id="profile-jsx">
             <div className="main-container">
-                <h1>
-                    Profile
-                </h1>
+                <h1>Profile</h1>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <input
                         type="file"
@@ -115,14 +126,12 @@ export default function Profile() {
                     />
 
                     <img
-                        src={
-                            formData.profilePicture ||
-                            currentUser.profilePicture
-                        }
+                        src={currentUser.profilePicture || USER_PIC}
                         alt="profile"
-                        className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2"
+                        className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2 hover-effect"
                         onClick={() => fileRef.current.click()}
                     />
+
                     <p className="text-sm self-center">
                         {imageError ? (
                             <span className="text-red-700">
@@ -169,11 +178,42 @@ export default function Profile() {
                 </form>
                 <div className="flex justify-between mt-5">
                     <span
-                        onClick={handleDeleteUser}
+                        onClick={showModal}
                         className="text-red-700 cursor-pointer"
                     >
                         Delete Account
                     </span>
+                    <Modal
+                        className="mt-60"
+                        title="Delete Account"
+                        open={isModalOpen}
+                        // onOk={handleOk}
+                        onCancel={handleCancel}
+                        footer={[
+                            <button
+                                key="submit"
+                                onClick={handleDeleteUser}
+                                className="bg-green-700 text-white p-2 rounded-lg uppercase hover:opacity-95 disabled:opacity-80 mr-3"
+                            >
+                                {" "}
+                                Confirm{" "}
+                            </button>,
+
+                            <button
+                                key="back"
+                                onClick={handleCancel}
+                                className="bg-red-700 text-white p-2 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+                            >
+                                {" "}
+                                Cancel{" "}
+                            </button>,
+                        ]}
+                    >
+                        <p className="font-semibold">
+                            {" "}
+                            Click on confirm to delete this account{" "}
+                        </p>
+                    </Modal>
                     <span
                         onClick={handleSignout}
                         className="text-red-700 cursor-pointer"

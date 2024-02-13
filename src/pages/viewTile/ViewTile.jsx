@@ -23,6 +23,7 @@ function ViewTile() {
                     titleData={data.title}
                     email={data?.email}
                     author={data?.author}
+                    likes={data?.likes}
                 />
             ))}
         </div>
