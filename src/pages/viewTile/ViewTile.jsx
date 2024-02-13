@@ -7,7 +7,7 @@ import './viewTile.scss';
 function ViewTile() {
     const titleData = useSelector((state) => state?.oneMinuteStory?.storyData);
 
-    // console.log("CHECK", titleData);
+    // console.log("TITLE DATA", titleData);
 
     useEffect(() => {
         // console.log("");
@@ -24,6 +24,7 @@ function ViewTile() {
                     email={data?.email}
                     author={data?.author}
                     likes={data?.likes}
+                    likedBy={data?.likedBy}
                 />
             ))}
         </div>
