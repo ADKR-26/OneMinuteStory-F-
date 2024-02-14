@@ -1,6 +1,6 @@
 import { Button, Card, Popconfirm, message } from "antd";
-import PropTypes from 'prop-types';
-import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
     actionSetTitleId,
     deleteStoryData,
@@ -25,24 +25,20 @@ function TitleCard({ titleData, id, email, author, likes, likedBy }) {
         (state) => state?.oneMinuteStory?.currentUser?.data
     );
 
-    // console.log(author);
-
-    console.log("LIKED BY", likedBy);
-
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const setTitleId = () => {
         dispatch(actionSetTitleId(id));
-        // console.log("DATA DELETED");
     };
 
     const deleteStory = (id) => {
         dispatch(deleteStoryData(id));
 
-        setTimeout(() => {
-            //TODO: Need to find a different way to rerender the data
-            dispatch(getStoryData());
-        }, 500);
+        // setTimeout(() => {
+        //     //TODO: Need to find a different way to rerender the data
+        //     dispatch(getStoryData());
+        // }, 500);
     };
 
     const confirm = (e) => {
@@ -52,13 +48,17 @@ function TitleCard({ titleData, id, email, author, likes, likedBy }) {
     };
 
     const likePost = async (id, email) => {
-        try {
-            dispatch(likeStory(id, email));
-            // dispatch(getStoryData());
-            // setLiked(!liked);
-            console.log("CLICKED", id, email);
-        } catch (error) {
-            console.log("Error in liking Story");
+        if (currentUser === undefined) {
+            navigate("/sign-in");
+        } else {
+            try {
+                dispatch(likeStory(id, email));
+                // dispatch(getStoryData());
+                // setLiked(!liked);
+                // console.log("CLICKED", id, email);
+            } catch (error) {
+                console.log("Error in liking Story");
+            }
         }
     };
 
@@ -84,7 +84,7 @@ function TitleCard({ titleData, id, email, author, likes, likedBy }) {
                                 </span>
                             }
                         >
-                            <DeleteOutlined className="absolute top-0 right-4 cursor-pointer text-2xl text-red-500" />
+                            <DeleteOutlined className="absolute top-2 right-4 cursor-pointer text-2xl text-red-500" />
                         </Popconfirm>
                     ) : (
                         ""
@@ -141,7 +141,7 @@ TitleCard.propTypes = {
     email: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
-    likedBy: PropTypes.arrayOf(PropTypes.string).isRequired, // Ensure likedBy is an array of strings
-}
+    likedBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default TitleCard;

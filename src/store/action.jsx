@@ -151,6 +151,7 @@ export function deleteStoryData(id) {
                 .delete(`${url}/api/deleteStory/${id}`)
                 .then((response) => {
                     dispatch(actionDeleteStoryData(response.data.deletedStory));
+                    dispatch(getStoryData());
                     console.log("Response", response.data.deletedStory);
                 })
                 .catch((error) => {
@@ -270,7 +271,7 @@ export function updateUser(
     password,
     currentUserID
 ) {
-    console.log("DATAAAAAA", email);
+    // console.log("DATAAAAAA", email);
     return (dispatch) => {
         try {
             axios
@@ -283,7 +284,8 @@ export function updateUser(
                 .then((response) => {
                     const updateError = false;
                     dispatch(actionUpdateUser(response, updateError));
-                    console.log("Response", response);
+                    dispatch(getStoryData());
+                    // console.log("Response", response);
                 })
                 .catch((error) => {
                     const updateError = true;
@@ -338,11 +340,11 @@ export function signOutUser() {
     };
 }
 
-export function likeStory(id, email) {
+export function likeStory(storyID, email) {
     return (dispatch) => {
         try {
             axios
-                .post(`${url}/api/likedBy/${id}`, { email })
+                .post(`${url}/api/likedBy/${storyID}`, { email })
                 .then((response) => {
                     // Dispatch your action with the response data if needed
                     dispatch(getStoryData());
