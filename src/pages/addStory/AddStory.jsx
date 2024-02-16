@@ -145,6 +145,7 @@ function AddStory({ titleData }) {
     return (
         <section id="addStory-jsx">
             <div className="main-container">
+                <p className="title">Let's Write a Story</p>
                 {!currentUser?.email ? (
                     <h1 className="text-7xl text-red-500 mt-80">
                         {" "}

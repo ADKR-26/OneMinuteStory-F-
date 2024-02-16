@@ -15,7 +15,7 @@ function ViewTile() {
 
     return (
         <div>
-            <p className="text-5xl flex justify-center mb-20 mt-20 font-bold"> STORY DATA </p>
+            <p className="text-5xl flex justify-center mb-20 mt-20 font-bold"> STORIES </p>
             {titleData.map((data) => (
                 <TitleCard
                     key={data._id}

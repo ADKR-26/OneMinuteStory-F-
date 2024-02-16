@@ -6,6 +6,7 @@ import StoryFeed from "../pages/storyFeed/StoryFeed";
 import ViewTile from "../pages/viewTile/ViewTile";
 import AddStory from "../pages/addStory/AddStory";
 import Contact from "../pages/contact/Contact";
+import About from "../pages/about/About";
 import SignIn from "../pages/signIn/SignIn";
 import SignUp from "../pages/signUp/SignUp";
 import Profile from "../pages/profile/Profile";
@@ -20,6 +21,7 @@ function AppRouter() {
             <Route path="/view_stories" element={<ViewTile />} />
             <Route path="/add_story" element={<AddStory />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route element={<PrivateRoute />}>

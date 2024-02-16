@@ -1,0 +1,54 @@
+#about-jsx {
+    .title {
+        font-size: 3rem !important;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    .about-page {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .about-page p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    ol {
+        list-style-type: none; /* Remove default numbering */
+        font-size: 1.2rem;
+    }
+
+    ol li::before {
+        content: "➤"; /* You can use any unicode or image here */
+        margin-right: 5px; /* Adjust spacing between arrow and text */
+    }
+
+    .button-container button{
+        font-size: 1.1rem /* 24px */;
+        line-height: 1.8rem /* 32px */;
+        height: fit-content;
+        padding-block: 8px;
+        padding-inline: 21px;
+        --tw-bg-opacity: 1;
+        background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+        --tw-text-opacity: 1;
+        color: rgb(255 255 255 / var(--tw-text-opacity));
+        text-transform: uppercase;
+        font-weight: 600;
+        border-radius: 8px /* 24px */;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .button-container button:hover {
+        --tw-translate-y: -0.5rem /* -8px */;
+        border-color: #fff;
+        transform: translate(var(--tw-translate-x), var(--tw-translate-y))
+            rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
+            skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
+            scaleY(var(--tw-scale-y));
+    }
+}

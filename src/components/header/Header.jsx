@@ -55,6 +55,9 @@ function Header() {
                             <Link to="/">Home</Link>
                         </li>
                         <li>
+                            <Link to="/about">About</Link>
+                        </li>
+                        <li>
                             <Link to="/contact">Contact</Link>
                         </li>
                         <li>
@@ -96,6 +99,15 @@ function Header() {
                                     // className="text-lg hover:text-blue-300"
                                 >
                                     Home
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/about"
+                                    onClick={toggleMenu}
+                                    // className="text-lg hover:text-blue-300"
+                                >
+                                    About
                                 </Link>
                             </li>
                             <li>
