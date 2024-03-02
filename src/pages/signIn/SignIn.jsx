@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../../store/action";
 import OAuth from "../../components/OAuth";
 
-import './signin.scss';
+import "./signin.scss";
 
 function SignIn() {
     const errorStatus = useSelector((state) => state?.oneMinuteStory?.error);
+    const currentUser = useSelector(
+        (state) => state?.oneMinuteStory?.currentUser?.data
+    );
 
     const [formData, setFormData] = useState({});
     const [error, setError] = useState(false);
@@ -25,31 +28,19 @@ function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // dispatch(signInStart());
-            // const res = await fetch('http://localhost:3000/OMS-api/auth/signin', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(formData),
-            // });
-            dispatch(signInUser(formData.email, formData.password));
-            // const data = await res.json();
-            // console.log("Success", data);
-            // setLoading(false);
-
-            // if (data.success === false) {
-            //     // setError(true);
-            //     dispatch(signInUser(data));
-            //     return;
-            // }
-            // dispatch(signInSuccess(data));
             setError(errorStatus);
+            dispatch(signInUser(formData.email, formData.password));
+            // if (errorStatus === false) {
+            //     navigate("/");
+            // }
 
+
+            console.log("Error Status", errorStatus);
+            // setError(false);
             // if there is no error while signing in then it will navigate to homepage
-            if (error) {
-                navigate("/");
-            }
+            // if (error === false) {
+            //     navigate("/");
+            // }
         } catch (error) {
             // setLoading(false);
             setError(true);
@@ -60,16 +51,14 @@ function SignIn() {
         }
     };
 
-    if (error === true) {
-        console.log("Error", error);
-    }
+    // if (error === true) {
+    //     console.log("Error ", error);
+    // }
 
     return (
         <section id="signin-jsx">
             <div className="main-container">
-                <h1>
-                    Sign In
-                </h1>
+                <h1>Sign In</h1>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <input

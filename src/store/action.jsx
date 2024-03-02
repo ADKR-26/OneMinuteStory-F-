@@ -166,7 +166,7 @@ export function deleteStoryData(id) {
 }
 
 export function signInUser(email, password) {
-    console.log("DATAAAAAA", email, password);
+    // console.log("DATAAAAAA", email, password);
     return (dispatch) => {
         try {
             axios
@@ -176,7 +176,7 @@ export function signInUser(email, password) {
                 })
                 .then((response) => {
                     dispatch(actionSignInUser(response));
-                    console.log("Response", response);
+                    // console.log("Response", response);
                 })
                 .catch((error) => {
                     const data = error.response;
@@ -191,7 +191,7 @@ export function signInUser(email, password) {
 }
 
 export function signUpUser(username, email, password) {
-    console.log("DATAAAAAA", username, email, password);
+    // console.log("DATAAAAAA", username, email, password);
     return (dispatch) => {
         dispatch(signUpUserRequest());
         try {
@@ -204,7 +204,7 @@ export function signUpUser(username, email, password) {
                 .then((response) => {
                     dispatch(actionSignUpUser(response));
                     dispatch(signUpUserSuccess(response.data));
-                    console.log("Response", response);
+                    // console.log("Response", response);
                 })
                 .catch((error) => {
                     const data = error.response;
@@ -219,14 +219,14 @@ export function signUpUser(username, email, password) {
 }
 
 export function signInUserGoogle(email) {
-    console.log("DATAAAAAA", email);
+    // console.log("DATAAAAAA", email);
     return (dispatch) => {
         try {
             axios
                 .post(`${url}/OMS-api/auth/google`, { email })
                 .then((response) => {
                     dispatch(actionSignInUserGoogle(response));
-                    console.log("Response", response);
+                    // console.log("Response", response);
                 })
                 .catch((error) => {
                     const data = error.response;
@@ -327,12 +327,12 @@ export function signOutUser() {
                 .get(`${url}/OMS-api/auth/signout`)
                 .then((response) => {
                     dispatch(actionSignOut(response));
-                    console.log("User Deleted", response);
+                    console.log("User SignOut Success", response);
                 })
                 .catch((error) => {
                     const data = error.response;
                     dispatch(actionSignOut(data));
-                    console.log("Error in delete User", error);
+                    console.log("Error in Signout User", error);
                 });
         } catch (error) {
             console.log(error);
@@ -352,10 +352,10 @@ export function likeStory(storyID, email) {
                 })
                 .catch((error) => {
                     // Handle error response
-                    console.log("Error", error);
+                    console.log("Error LikeStory", error);
                 });
         } catch (error) {
-            console.log("Error", error);
+            console.log("Error LikeStory", error);
         }
     };
 }
