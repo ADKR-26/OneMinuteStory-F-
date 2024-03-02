@@ -17,10 +17,10 @@ function HomePage2() {
         <section id="homepage-jsx">
             <div className="main-container">
                 <div className="container">
-                    <p className="warning-container">
+                    {/* <p className="warning-container">
                         * This app is still in production, but you can still use
                         demo version of this app.
-                    </p>
+                    </p> */}
                     <p className="title">One Minute Story</p>
                     <p className="description">
                         Ignite creativity in 60 seconds! Choose a title, feel

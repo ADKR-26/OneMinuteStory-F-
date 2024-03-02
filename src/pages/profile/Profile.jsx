@@ -146,7 +146,7 @@ export default function Profile() {
                             </span>
                         ) : (
                             ""
-                        )}
+                        )} Click on the image to change
                     </p>
                     <input
                         defaultValue={currentUser.username}
@@ -160,8 +160,9 @@ export default function Profile() {
                         defaultValue={currentUser.email}
                         type="email"
                         id="email"
+                        disabled
                         placeholder="Email"
-                        className="bg-slate-100 rounded-lg p-3"
+                        className="bg-slate-400 rounded-lg p-3"
                         onChange={handleChange}
                     />
                     <input
