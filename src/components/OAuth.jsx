@@ -12,6 +12,7 @@ function OAuth(data) {
     const navigate = useNavigate();
 
     const loginType = data.data;
+    const googleUsed = true;
 
     const handleGoogleClick = async () => {
         try {
@@ -24,12 +25,12 @@ function OAuth(data) {
             // console.log(data.data);
 
             if (loginType === 'signin') {
-                dispatch(signInUserGoogle(email));
+                dispatch(signInUserGoogle(email, googleUsed));
                 navigate('/');          // After login it would navigate to home page
                 console.log("signin");
             }
             else {
-                dispatch(signUpUserGoogle(displayName, email, photoURL));
+                dispatch(signUpUserGoogle(displayName, email, photoURL, googleUsed));
                 navigate('/');
                 console.log('signup');
             }

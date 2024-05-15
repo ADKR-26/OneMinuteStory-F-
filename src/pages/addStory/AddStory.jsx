@@ -51,8 +51,8 @@ function AddStory({ titleData }) {
             console.log("EMAILLL", currentUser);
             dispatch(
                 setStoryData(
-                    data.title,
-                    data.story,
+                    data?.title,
+                    data?.story,
                     currentUser?.email,
                     currentUser?.username
                 )
