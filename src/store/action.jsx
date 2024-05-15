@@ -173,6 +173,7 @@ export function signInUser(email, password) {
                 .post(`${url}/OMS-api/auth/signin`, {
                     email,
                     password,
+                    googleUsed: false
                 })
                 .then((response) => {
                     dispatch(actionSignInUser(response));
@@ -200,6 +201,7 @@ export function signUpUser(username, email, password) {
                     username,
                     email,
                     password,
+                    googleUsed: false
                 })
                 .then((response) => {
                     dispatch(actionSignUpUser(response));
@@ -218,12 +220,12 @@ export function signUpUser(username, email, password) {
     };
 }
 
-export function signInUserGoogle(email) {
+export function signInUserGoogle(email, googleUsed) {
     // console.log("DATAAAAAA", email);
     return (dispatch) => {
         try {
             axios
-                .post(`${url}/OMS-api/auth/google`, { email })
+                .post(`${url}/OMS-api/auth/google`, { email, googleUsed })
                 .then((response) => {
                     dispatch(actionSignInUserGoogle(response));
                     // console.log("Response", response);
@@ -239,7 +241,7 @@ export function signInUserGoogle(email) {
     };
 }
 
-export function signUpUserGoogle(name, email, photo) {
+export function signUpUserGoogle(name, email, photo, googleUsed) {
     photo = photo.toString();
     return (dispatch) => {
         try {
@@ -248,6 +250,7 @@ export function signUpUserGoogle(name, email, photo) {
                     name,
                     email,
                     photo,
+                    googleUsed
                 })
                 .then((response) => {
                     dispatch(actionSignUpUserGoogle(response));
