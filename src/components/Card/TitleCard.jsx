@@ -74,12 +74,12 @@ function TitleCard({ titleData, id, email, author, likes, likedBy }) {
                             onConfirm={confirm}
                             // onCancel={cancel}
                             okText={
-                                <span className="text-black font-semibold">
+                                <span className="text-red-500 font-semibold">
                                     Yes
                                 </span>
                             }
                             cancelText={
-                                <span className="text-red-500 font-semibold">
+                                <span className="text-green-500 font-semibold">
                                     No
                                 </span>
                             }

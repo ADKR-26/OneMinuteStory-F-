@@ -1,8 +1,85 @@
 #contact-jsx {
-    .contact {
-        font-size: 3rem;
-        a {
-            color: blue;
-        }
+    padding: 0rem 30rem;
+    background-color: rgb(241, 245, 249);
+    width: 100%;
+    
+    .text-secondary {
+      color: rgb(100, 116, 139);
     }
-}
+    
+    h3 {
+      margin-top: 1rem;
+      color: rgb(30, 58, 138);
+    }
+    
+    form {
+      width: 100%;
+      
+      label {
+        margin-bottom: 1.5rem;
+        display: block;
+        
+        span {
+          color: rgb(30, 58, 138);
+          font-weight: 500;
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+      }
+      
+      input,
+      textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background-color: rgb(226, 232, 240);
+        border: 1px solid rgb(203, 213, 225);
+        border-radius: 0.5rem;
+        color: rgb(30, 58, 138);
+        font-size: 1rem;
+        
+        &::placeholder {
+          color: rgb(148, 163, 184);
+        }
+        
+        &:focus {
+          outline: none;
+          border-color: rgb(30, 58, 138);
+        }
+      }
+      
+      .text-red-500 {
+        color: rgb(239, 68, 68);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
+      
+      button {
+        background-color: rgb(30, 58, 138);
+        color: rgb(255, 255, 255);
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        
+        &:hover {
+          background-color: rgb(37, 99, 235);
+        }
+        
+        &:disabled {
+          background-color: rgb(148, 163, 184);
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 640px) {
+    #contact-jsx {
+      padding: 2rem 1rem;
+      
+      h3 {
+        font-size: 2rem;
+      }
+    }
+  }

@@ -126,7 +126,7 @@ function AddStory({ titleData }) {
         setTimeout(() => {
             setRemainingTime(60);
             form.resetFields();
-        }, 2000);
+        }, 500);
         // form.resetFields();
     };
 
