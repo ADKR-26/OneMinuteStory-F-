@@ -18,7 +18,7 @@ function ViewTile() {
           const data = await getCoverImage(story._id);
           images[story._id] = data?.mainCoverImage;
         } catch {
-          images[story._id] = undefined;
+          images[story._id] = '';
         }
       }
       setCoverImages(images);
@@ -33,8 +33,7 @@ function ViewTile() {
   return (
     <div>
       <p className="text-5xl flex justify-center mb-20 mt-20 font-bold">
-        {" "}
-        STORIES{" "}
+        STORIES
       </p>
       {titleData?.map((data) => (
         <TitleCard

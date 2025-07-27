@@ -1,3 +1,4 @@
+import Skeleton from "react-loading-skeleton";
 import { Button, Card, Popconfirm, message } from "antd";
 import PropTypes from "prop-types";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -14,9 +15,11 @@ import {
   HeartFilled,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import dummyImage from "../../assets/test_image.png";
+import Dummy from "../PlaceholderImage/PlaceholderImage";
 
 import "./titleCard.scss";
+import "react-loading-skeleton/dist/skeleton.css";
+
 // import { useState } from "react";
 
 function TitleCard({ titleData, id, email, author, likes, likedBy, coverImage }) {
@@ -68,82 +71,116 @@ function TitleCard({ titleData, id, email, author, likes, likedBy, coverImage })
       <div className="main-container">
         {/* Current Stories */}
         <Card key={id} className="card-content">
-          <img
-            src={coverImage}
-            alt="Cover Image"
-            className="story-cover-image"
-          />
-          {currentUser?.email === email ? (
-            <Popconfirm
-              title="Delete the Story"
-              description="Are you sure you want to delete this story?"
-              onConfirm={confirm}
-              // onCancel={cancel}
-              okText={<span className="text-red-500 font-semibold">Yes</span>}
-              cancelText={
-                <span className="text-green-500 font-semibold">No</span>
-              }
-            >
-              <DeleteOutlined className="absolute top-2 right-4 cursor-pointer text-2xl text-red-500" />
-            </Popconfirm>
+          {coverImage === undefined ? (
+            <Skeleton
+              borderRadius={8}
+              width={720}
+              height={400}
+              highlightColor="#dcddde"
+              baseColor="#f9fafb"
+            />
+          ) : coverImage ? (
+            <img
+              src={coverImage}
+              alt="Cover Image"
+              className="story-cover-image"
+            />
           ) : (
-            ""
-          )}
-          {currentUser?.email ? (
-            likedBy.includes(currentUser?.email) ? (
-              <HeartFilled
-                onClick={() => likePost(id, currentUser?.email)}
-                className="absolute bottom-6 right-4 cursor-pointer text-2xl text-red-500 "
-              />
-            ) : (
-              <HeartOutlined
-                onClick={() => likePost(id, currentUser?.email)}
-                className="absolute bottom-6 right-4 cursor-pointer text-2xl text-red-500 "
-              />
-            )
-          ) : (
-            <HeartOutlined className="absolute bottom-6 right-4 cursor-pointer text-2xl text-black-100" />
-          )}
-
-          {currentUser?.email ? (
-            <p className="absolute bottom-1 right-6 cursor-pointer text-1xl text-red-500">
-              {" "}
-              {likes}{" "}
-            </p>
-          ) : (
-            <p className="absolute bottom-1 right-6 cursor-pointer text-1xl text-black-100">
-              {" "}
-              {likes}{" "}
-            </p>
+            <Dummy name={titleData} />
           )}
 
           {/* <p className="absolute bottom-1 right-6 cursor-pointer text-1xl text-red-500">
-            {" "}
-            {likes}{" "}
+            {likes}
           </p> */}
 
-          <p className="p-10 text-2xl">
-            <label className="font-bold">Title:</label> {titleData}{" "}
-          </p>
-          <div className="flex justify-center">
-            <Button
-              className="button"
-              onClick={setTitleId}
-              // className="text-xl h-12 bg-blue-900 text-white uppercase font-semibold py-2 rounded-xl shadow-xl"
-            >
-              <NavLink
-                to={{
-                  pathname: "/story_details",
-                  // state: { key: demo }
-                }}
-              >
-                View
-              </NavLink>
-            </Button>
-          </div>
-          <div className="flex justify-center text-lg font-semibold">
-            <label htmlFor="">Author: {author} </label>
-          </div>
+          {!titleData && !author ? (
+            <Skeleton
+              borderRadius={8}
+              width={720}
+              height={120}
+              highlightColor="#dcddde"
+              baseColor="#f9fafb"
+              className="mt-3"
+            ></Skeleton>
+          ) : (
+            <>
+              {currentUser?.email === email ? (
+                <Popconfirm
+                  title="Delete the Story"
+                  description="Are you sure you want to delete this story?"
+                  onConfirm={confirm}
+                  // onCancel={cancel}
+                  okText={
+                    <span className="text-red-500 font-semibold">
+                      Yes
+                    </span>
+                  }
+                  cancelText={
+                    <span className="text-green-500 font-semibold">
+                      No
+                    </span>
+                  }
+                >
+                  <DeleteOutlined className="absolute top-2 right-4 cursor-pointer text-2xl text-red-500" />
+                </Popconfirm>
+              ) : (
+                ""
+              )}
+
+              {currentUser?.email ? (
+                likedBy.includes(currentUser?.email) ? (
+                  <HeartFilled
+                    onClick={() =>
+                      likePost(id, currentUser?.email)
+                    }
+                    className="absolute bottom-6 right-4 cursor-pointer text-2xl text-red-500 "
+                  />
+                ) : (
+                  <HeartOutlined
+                    onClick={() =>
+                      likePost(id, currentUser?.email)
+                    }
+                    className="absolute bottom-6 right-4 cursor-pointer text-2xl text-red-500 "
+                  />
+                )
+              ) : (
+                <HeartOutlined className="absolute bottom-6 right-4 cursor-pointer text-2xl text-black-100" />
+              )}
+
+              {currentUser?.email ? (
+                <p className="absolute bottom-1 right-6 cursor-pointer text-1xl text-red-500">
+                  {likes}
+                </p>
+              ) : (
+                <p className="absolute bottom-1 right-6 cursor-pointer text-1xl text-black-100">
+                  {likes}
+                </p>
+              )}
+              <p className="p-10 text-2xl flex gap-2">
+                <label className="font-bold">Title:</label>
+                {titleData || <Skeleton width={400} />}
+              </p>
+              <div className="flex justify-center">
+                <Button
+                  className="button"
+                  onClick={setTitleId}
+                  // className="text-xl h-12 bg-blue-900 text-white uppercase font-semibold py-2 rounded-xl shadow-xl"
+                >
+                  <NavLink
+                    to={{
+                      pathname: "/story_details",
+                      // state: { key: demo }
+                    }}
+                  >
+                    View
+                  </NavLink>
+                </Button>
+              </div>
+              <div className="flex justify-center text-lg font-semibold">
+                <label htmlFor="">Author: {author} </label>
+              </div>
+            </>
+          )}
         </Card>
       </div>
     </section>
