@@ -16,6 +16,7 @@
     "antd": "^5.5.1",
     "axios": "^1.4.0",
     "firebase": "^10.6.0",
+    "lucide-react": "^0.533.0",
     "openai": "^4.83.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
