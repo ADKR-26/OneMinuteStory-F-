@@ -1,0 +1,37 @@
+#profile-jsx {
+    .main-container {
+        padding: 0.75rem /* 12px */;
+        max-width: 34rem /* 512px */;
+        width: 34rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .main-container h1 {
+        font-size: 2.475rem /* 30px */;
+        line-height: 2.25rem /* 36px */;
+        font-weight: 600;
+        text-align: center;
+        margin-top: 1.75rem /* 28px */;
+        margin-bottom: 1.75rem /* 28px */;
+    }
+
+    @media screen and (max-width: 768px) {
+        .main-container {
+            padding: 0.75rem /* 12px */;
+            max-width: 25rem /* 512px */;
+            width: 25rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .main-container h1 {
+            font-size: 2.475rem /* 30px */;
+            line-height: 2.25rem /* 36px */;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 1.75rem /* 28px */;
+            margin-bottom: 1.75rem /* 28px */;
+        }
+    }
+}

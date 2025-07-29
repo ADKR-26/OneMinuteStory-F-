@@ -1,0 +1,216 @@
+$hoverColor: #facc15;
+$activeColor: #f59e0b;
+$backgroundColor: #1b1a1a;
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: 5rem;
+    background-color: $backgroundColor; // blue-900
+    // background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+    backdrop-filter: blur(8px);
+    width: 100%;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #475569; // cinema-medium
+    // margin-top: 1rem;
+    padding-top: 0.5rem;
+
+    .section2{
+        display: flex;
+        // align-items: center;
+        // justify-content: right;
+        // left: 0;
+        gap: 1rem;
+        // margin-left: 30rem;
+        // padding: 0.5rem 0;
+        // background-color: rgba(30, 58, 138, 0.8); // cinema-accent/80
+        // border-radius: 0.5rem;
+    }
+
+    .header__container {
+        display: flex;
+        max-width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        // padding: 0 1rem;
+    }
+
+    .search-box__input{
+        width: 35em;
+        height: 3rem;
+    }
+
+    .header__logo {
+        margin-right: 10svw;
+    }
+
+    &__container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        color: white;
+    }
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 4rem;
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+
+        &:hover {
+            color: #f59e0b; // cinema-accent-dark
+        }
+    }
+
+    &__logo-img {
+        width: 6rem;
+    }
+
+    &__search-desktop {
+        display: none;
+
+        @media (min-width: 768px) {
+            display: flex;
+            flex: 1;
+            max-width: 28rem;
+            margin: 0 2rem;
+        }
+    }
+
+    &__search-mobile {
+        padding-bottom: 1rem;
+
+        .search-box {
+            background: white;
+        }
+    }
+
+    &__links {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    color: #cbd5e1; // cinema-text
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover {
+        color: #facc15; // cinema-accent
+    }
+
+    &.active {
+        background-color: rgba(250, 204, 21, 0.1); // cinema-accent/10
+        color: #facc15;
+    }
+
+    .nav-label {
+        display: none;
+
+        @media (min-width: 640px) {
+            display: inline;
+        }
+    }
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #facc15; // cinema-accent
+    color: black;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+        background-color: #f59e0b; // cinema-accent-dark
+    }
+
+    .nav-label {
+        display: none;
+
+        @media (min-width: 640px) {
+            display: inline;
+        }
+    }
+}
+
+.notification-link {
+    position: relative;
+
+    .notification-dot {
+        position: absolute;
+        top: -0.25rem;
+        right: -0.25rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: red;
+        border-radius: 9999px;
+    }
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    color: black;
+
+    &__icon {
+        position: absolute;
+        top: 50%;
+        left: 0.75rem;
+        transform: translateY(-50%);
+        width: 1rem;
+        height: 1rem;
+        color: #94a3b8; // cinema-text-dim
+    }
+
+    &__input {
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        border: 1px solid #cbd5e1; // cinema-light
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        outline: none;
+
+        &:focus {
+            border-color: #facc15;
+            box-shadow: 0 0 0 1px #facc15;
+        }
+    }
+}
+
+.mobile-search-toggle {
+    background: none;
+    border: none;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+        color: #facc15;
+    }
+}
+
+.nav-icon {
+    width: 1rem;
+    height: 1rem;
+}
