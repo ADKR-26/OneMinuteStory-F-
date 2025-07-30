@@ -121,18 +121,18 @@ function Header_v2() {
           </div>
 
           {/* Mobile Search Bar */}
-          {/* {isSearchOpen && (
-          <div className="header__search-mobile">
-          <div className="search-box">
-          <Search className="search-box__icon" />
-          <input
-          type="text"
-          placeholder="Search stories..."
-          className="search-box__input"
-          />
-          </div>
-          </div>
-          )} */}
+          {isSearchOpen && (
+            <div className="header__search-mobile">
+              <div className="search-box">
+                <Search className="search-box__icon" />
+                <input
+                  type="text"
+                  placeholder="Search stories..."
+                  className="search-box__input"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>
