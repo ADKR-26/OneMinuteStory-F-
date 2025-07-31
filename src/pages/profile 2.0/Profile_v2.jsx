@@ -1,245 +1,469 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState, useEffect } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { app } from "../../../firebase";
-import { deleteUser, signOutUser, updateUser } from "../../store/action";
-import { useNavigate } from "react-router-dom";
-import { Button, Modal } from "antd";
+  User,
+  BookOpen,
+  Trophy,
+  Calendar,
+  ThumbsUp,
+  PenTool,
+  Edit,
+  Camera,
+  Mail,
+  Lock,
+  Save,
+  X,
+} from "lucide-react";
 
-import USER_PIC from "../../assets/user.png";
 import "./profile_v2.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-export default function Profile_v2() {
+const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const currentUser = useSelector(
     (state) => state?.oneMinuteStory?.currentUser?.data
   );
+  console.log("Current User:", currentUser);
 
-  const updateError = useSelector(
-    (state) => state?.oneMinuteStory?.updateError
-  );
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [formData, setFormData] = React.useState({
+    username: currentUser.username || "NightScribe",
+    email: "nightscribe@example.com",
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
-  const fileRef = useRef(null);
-  const [image, setImage] = useState(undefined);
-  const [imagePercent, setImagePercent] = useState(0);
-  const [imageError, setImageError] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [showUpdated, setShowUpdate] = useState(false);
-  const [modalContent, setModalContent] = useState("");
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = (params) => {
-    setModalContent(params);
-    setIsModalOpen(true);
+  const userStats = {
+    storiesStarted: 12,
+    scenesWritten: 47,
+    totalUpvotes: 328,
+    joinDate: "March 2024",
+    favoriteGenre: "Sci-Fi",
+    writingStreak: 5,
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
+
+  const recentStories = [
+    {
+      id: "1",
+      title: "The Last Signal",
+      lastContribution: "2 hours ago",
+      upvotes: 24,
+      status: "active",
+    },
+    {
+      id: "2",
+      title: "Digital Dreams",
+      lastContribution: "1 day ago",
+      upvotes: 18,
+      status: "completed",
+    },
+    {
+      id: "3",
+      title: "Quantum Echoes",
+      lastContribution: "3 days ago",
+      upvotes: 31,
+      status: "active",
+    },
+  ];
+
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
+
+  const handleSave = () => {
+    // In a real app, this would make an API call to update the user profile
+    console.log("Saving profile changes:", formData);
+    setIsEditing(false);
+    // Reset password fields after save
+    setFormData((prev) => ({
+      ...prev,
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    }));
+  };
+
   const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  useEffect(() => {
-    if (image) {
-      handleFileUpload(image);
-    }
-  }, [image]);
-
-  const handleFileUpload = async (image) => {
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + image.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setImagePercent(Math.round(progress));
-      },
-      (error) => {
-        setImageError(true);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData({ ...formData, profilePicture: downloadURL })
-        );
-      }
-    );
-  };
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    dispatch(
-      updateUser(
-        formData.username,
-        formData.email,
-        formData.profilePicture,
-        formData.password,
-        currentUser._id
-      )
-    );
-
-    if (updateError === false) {
-      setShowUpdate(true);
-    } else {
-      setShowUpdate(false);
-    }
-
-    setTimeout(() => {
-      setShowUpdate(false);
-    }, 2000);
-    // console.log("Form Data", formData);
-  };
-
-  const handleDeleteUser = () => {
-    dispatch(deleteUser(currentUser._id));
-    navigate("/");
-  };
-
-  const handleSignout = () => {
-    dispatch(signOutUser());
-    navigate("/");
+    setIsEditing(false);
+    // Reset form data to original values
+    setFormData({
+      username: "NightScribe",
+      email: "nightscribe@example.com",
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
   };
 
   return (
-    <section id="profile-jsx">
-      <div className="main-container">
-        <h1>Profile V2</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="file"
-            ref={fileRef}
-            hidden
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
+    <div className="profile-page">
+      <div className="profile-container">
+        {/* Profile Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="profile-card"
+        >
+          <div className="card-content">
+            <div className="profile-header">
+              <div className="relative">
+                <div className="avatar">
+                  <User className="avatar-icon" />
+                </div>
+                {isEditing && (
+                  <button className="edit-button">
+                    <Camera className="w-4 h-4 text-cinema-text" />
+                  </button>
+                )}
+              </div>
 
-          <img
-            src={currentUser.profilePicture || USER_PIC}
-            alt="profile"
-            className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2 hover-effect"
-            onClick={() => fileRef.current.click()}
-          />
+              <div>
+                {isEditing ? (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-sm font-medium text-cinema-text mb-1">
+                        Username
+                      </label>
+                      <input
+                        type="text"
+                        value={currentUser.username || 'NightScribe'}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "username",
+                            e.target.value
+                          )
+                        }
+                        // className="cinema-input w-64"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-cinema-text mb-1">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "email",
+                            e.target.value
+                          )
+                        }
+                        className="cinema-input w-64"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <h1 className="username-title">
+                      {formData.username}
+                    </h1>
+                    <p className="dim-text">
+                      Weaving stories in the digital
+                      darkness since {userStats.joinDate}
+                    </p>
+                  </>
+                )}
 
-          <p className="text-sm self-center">
-            {imageError ? (
-              <span className="text-red-700">
-                Error uploading image (file size must be less than 2 MB)
-              </span>
-            ) : imagePercent > 0 && imagePercent < 100 ? (
-              <span className="text-slate-700">{`Uploading: ${imagePercent} %`}</span>
-            ) : imagePercent === 100 ? (
-              <span className="text-green-700">
-                Image uploaded successfully
-              </span>
-            ) : (
-              ""
-            )}{" "}
-            Click on the image to change
-          </p>
-          <input
-            defaultValue={currentUser.username}
-            type="text"
-            id="username"
-            placeholder="Username"
-            className="bg-slate-100 rounded-lg p-3"
-            onChange={handleChange}
-          />
-          <input
-            defaultValue={currentUser.email}
-            type="email"
-            id="email"
-            disabled
-            placeholder="Email"
-            className="bg-slate-400 rounded-lg p-3"
-            onChange={handleChange}
-          />
-          {currentUser?.googleUsed ? (
-            ""
-          ) : (
-            <input
-              type="password"
-              id="password"
-              placeholder="Password"
-              className="bg-slate-100 rounded-lg p-3"
-              onChange={handleChange}
-            />
-          )}
-          <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-            {/* {loading ? "Loading..." : "Update"} */}
-            Update
-          </button>
-        </form>
-        <div className="flex justify-between mt-5">
-          <span
-            onClick={() => showModal("delete")}
-            className="text-red-700 cursor-pointer"
-          >
-            Delete Account
-          </span>
-          <Modal
-            className="mt-60"
-            title={modalContent === "delete" ? "Delete Account" : "Sign Out"}
-            open={isModalOpen}
-            // onOk={handleOk}
-            onCancel={handleCancel}
-            footer={[
-              <button
-                key="submit"
-                onClick={
-                  modalContent === "delete" ? handleDeleteUser : handleSignout
-                }
-                className="bg-green-700 text-white p-2 rounded-lg uppercase hover:opacity-95 disabled:opacity-80 mr-3"
+                <div className="user-info-line">
+                  <div className="info-label">
+                    <Calendar className="w-4 h-4 text-cinema-accent" />
+                    <span>
+                      {userStats.writingStreak} day writing
+                      streak
+                    </span>
+                  </div>
+                  <div className="info-label">
+                    <BookOpen className="w-4 h-4 text-cinema-accent" />
+                    <span>
+                      Favorite: {userStats.favoriteGenre}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="header-buttons">
+                {isEditing ? (
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={handleSave}
+                      // className="cinema-button flex items-center space-x-2"
+                      className="editButton"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>Save</span>
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      // className="px-4 py-2 bg-cinema-medium hover:bg-cinema-light text-cinema-text rounded-lg transition-colors flex items-center space-x-2"
+                      className="cancelButton"
+                    >
+                      <X className="w-4 h-4" />
+                      <span>Cancel</span>
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="editButton"
+                    // className="cinema-button flex items-center space-x-2"
+                  >
+                    <Edit className="w-4 h-4" />
+                    <span>Edit Profile</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Password Change Section */}
+            {isEditing && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="mt-8 pt-6 border-t border-cinema-medium"
               >
-                Confirm{" "}
-              </button>,
+                <h3 className="section-title">
+                  Change Password
+                </h3>
+                <div className="password-grid">
+                  <div>
+                    <label className="block text-sm font-medium text-cinema-text mb-1">
+                      Current Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-cinema-text-dim" />
+                      <input
+                        type="password"
+                        value={formData.currentPassword}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "currentPassword",
+                            e.target.value
+                          )
+                        }
+                        className="cinema-input w-full pl-10"
+                        placeholder="Enter current password"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-cinema-text mb-1">
+                      New Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-cinema-text-dim" />
+                      <input
+                        type="password"
+                        value={formData.newPassword}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "newPassword",
+                            e.target.value
+                          )
+                        }
+                        className="cinema-input w-full pl-10"
+                        placeholder="Enter new password"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-cinema-text mb-1">
+                      Confirm Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-cinema-text-dim" />
+                      <input
+                        type="password"
+                        value={formData.confirmPassword}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "confirmPassword",
+                            e.target.value
+                          )
+                        }
+                        className="cinema-input w-full pl-10"
+                        placeholder="Confirm new password"
+                      />
+                    </div>
+                  </div>
+                </div>
+                {formData.newPassword &&
+                  formData.confirmPassword &&
+                  formData.newPassword !==
+                    formData.confirmPassword && (
+                    <p className="text-red-400 text-sm mt-2">
+                      Passwords do not match
+                    </p>
+                  )}
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
 
-              <button
-                key="back"
-                onClick={handleCancel}
-                className="bg-red-700 text-white p-2 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-              >
-                {" "}
-                Cancel{" "}
-              </button>,
-            ]}
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Stats Panel */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="lg:col-span-1"
           >
-            <p className="font-semibold">
-              {modalContent === "delete"
-                ? "Click on confirm to delete this account"
-                : "Click on confirm to Sign Out from this account"}
-            </p>
-          </Modal>
-          {/* <span onClick={handleSignout}  className="text-red-700 cursor-pointer"> */}
-          <span
-            onClick={() => showModal("signOut")}
-            className="text-red-700 cursor-pointer"
+            <div className="profile-card">
+              <div className="card-content">
+                <h2 className="section-title">
+                  Writing Stats
+                </h2>
+                <div className="stat-box">
+                  <div className="text-center">
+                    <div className="stat-value">
+                      {userStats.scenesWritten}
+                    </div>
+                    <div className="stat-label">
+                      <PenTool className="w-4 h-4" />
+                      <span>Scenes Written</span>
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <div className="stat-value">
+                      {userStats.totalUpvotes}
+                    </div>
+                    <div className="stat-label">
+                      <ThumbsUp className="w-4 h-4" />
+                      <span>Total Upvotes</span>
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <div className="stat-value">
+                      {userStats.storiesStarted}
+                    </div>
+                    <div className="stat-label">
+                      <BookOpen className="w-4 h-4" />
+                      <span>Stories Started</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Achievements */}
+                <div className="mt-8">
+                  <h3 className="section-title">
+                    Recent Achievements
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="achievement-item">
+                      <Trophy className="w-5 h-5 text-cinema-accent" />
+                      <div>
+                        <div className="achievement-title">
+                          Scene Master
+                        </div>
+                        <div className="achievement-desc">
+                          Wrote 50+ scenes
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="achievement-item">
+                      <Trophy className="w-5 h-5 text-cinema-accent" />
+                      <div>
+                        <div className="achievement-title">
+                          Community Favorite
+                        </div>
+                        <div className="achievement-desc">
+                          Received 300+ upvotes
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Recent Activity */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="lg:col-span-2"
           >
-            Sign out
-          </span>
+            <div className="profile-card">
+              <div className="card-content">
+                <h2 className="section-title">
+                  My Stories
+                </h2>
+
+                <div className="story-list">
+                  {recentStories.map((story, index) => (
+                    <motion.div
+                      key={story.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * index }}
+                      className="story-card"
+                    >
+                      <div className="story-info">
+                        <div
+                          className={`w-3 h-3 rounded-full ${
+                            story.status === "active"
+                              ? "bg-green-500"
+                              : "bg-cinema-accent"
+                          }`}
+                        />
+                        <div>
+                          <h3 className="font-medium text-cinema-text">
+                            {story.title}
+                          </h3>
+                          <p className="text-sm text-cinema-text-dim">
+                            Last contribution:{" "}
+                            {story.lastContribution}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-1 text-cinema-text-dim">
+                          <ThumbsUp className="w-4 h-4" />
+                          <span className="text-sm">
+                            {story.upvotes}
+                          </span>
+                        </div>
+                        <span
+                          className={`story-status ${
+                            story.status === "active"
+                              ? "active"
+                              : "paused"
+                          }`}
+                        >
+                          {story.status}
+                        </span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="action-buttons">
+                  <button className="cinema-button flex items-center space-x-2">
+                    <PenTool className="w-4 h-4" />
+                    <span>Start New Story</span>
+                  </button>
+
+                  <button className="secondary-button">
+                    View All Stories
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
-        <p className="text-green-700 mt-5">
-          {showUpdated && "Updated Successfully..."}
-        </p>
-
-        <p className="text-red-700 mt-5">
-          {updateError &&
-            "Sorry, the username is already in use. Please choose a different username."}
-        </p>
       </div>
-    </section>
+    </div>
   );
-}
+};
+
+export default ProfilePage;

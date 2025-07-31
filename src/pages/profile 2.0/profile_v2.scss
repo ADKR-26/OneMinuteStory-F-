@@ -1,37 +1,294 @@
-#profile-jsx {
-    .main-container {
-        padding: 0.75rem /* 12px */;
-        max-width: 34rem /* 512px */;
-        width: 34rem;
-        margin-left: auto;
-        margin-right: auto;
-    }
+$cinema-black: #0a0a0a;
+$cinema-medium: #2a2a2a;
+$cinema-light: #3a3a3a;
+$cinema-accent: #f59e0b;
+$cinema-text: #e5e5e5;
+$cinema-text-dim: #a3a3a3;
 
-    .main-container h1 {
-        font-size: 2.475rem /* 30px */;
-        line-height: 2.25rem /* 36px */;
-        font-weight: 600;
-        text-align: center;
-        margin-top: 1.75rem /* 28px */;
-        margin-bottom: 1.75rem /* 28px */;
-    }
 
-    @media screen and (max-width: 768px) {
-        .main-container {
-            padding: 0.75rem /* 12px */;
-            max-width: 25rem /* 512px */;
-            width: 25rem;
-            margin-left: auto;
-            margin-right: auto;
+.profile-page {
+    min-height: 100vh;
+    width: 100vw;
+    background-color: $cinema-black;
+    padding: 2rem 0;
+}
+
+.profile-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.profile-card {
+    background: $cinema-medium;
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.card-content {
+    padding: 2rem;
+    border-radius: 1rem;
+
+    &:hover {
+        border: 2px solid $cinema-accent;
+        z-index: 100;
+    }
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    // background-color: $cinema-medium;
+
+    .avatar {
+        width: 6rem;
+        height: 6rem;
+        background: $cinema-accent;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .avatar-icon {
+            width: 3rem;
+            height: 3rem;
+            color: $cinema-black;
         }
 
-        .main-container h1 {
-            font-size: 2.475rem /* 30px */;
-            line-height: 2.25rem /* 36px */;
-            font-weight: 600;
-            text-align: center;
-            margin-top: 1.75rem /* 28px */;
-            margin-bottom: 1.75rem /* 28px */;
+    }
+
+    .header-buttons {
+        // margin-left: auto;
+
+        .editButton {
+            display: flex;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            color: $cinema-black;
+            background-color: $cinema-accent;
+            align-items: center;
+            gap: 0.5rem;
+            --tw-space-x-reverse: 0;
+            margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+            margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+            transition: background-color 0.3s;
+
+            &:hover {
+                filter: brightness(110%);
+                // background-color: #b67a13;
+
+            }
+        }
+
+        .cancelButton {
+            padding: 0.5rem 1rem;
+            background-color: $cinema-light;
+            color: $cinema-text;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: grey;
+            }
+        }
+
+        .saveButton {}
+    }
+
+    input {
+        display: flex;
+        align-items: center;
+        // text-align: center;
+         padding-left: 0.75rem;
+        background-color: $cinema-medium;
+        height: 2rem;
+        width: 16rem;
+        color: white;
+        border: 2px solid $cinema-light;
+        border-radius: 0.5rem;
+    }
+
+    .edit-button {
+        position: absolute;
+        bottom: -0.25rem;
+        right: -0.25rem;
+        width: 2rem;
+        height: 2rem;
+        background: $cinema-medium;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background: $cinema-light;
+        }
+    }
+
+    .username-title {
+        font-size: 1.875rem;
+        font-weight: bold;
+        color: $cinema-text;
+        margin-bottom: 0.5rem;
+    }
+
+    .dim-text {
+        color: $cinema-text-dim;
+        margin-bottom: 1rem;
+    }
+
+    .user-info-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        .info-label {
+            font-size: 0.875rem;
+            color: $cinema-text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+}
+
+.password-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+
+    input {
+        display: flex;
+        align-items: center;
+        // text-align: center;
+         padding-left: 1.75rem;
+        background-color: $cinema-medium;
+        height: 2rem;
+        width: 16rem;
+        color: white;
+        border: 2px solid $cinema-light;
+        border-radius: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $cinema-text;
+    margin-bottom: 1.5rem;
+}
+
+.stat-box {
+    .stat-value {
+        font-size: 1.875rem;
+        font-weight: bold;
+        color: $cinema-accent;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.875rem;
+        color: $cinema-text-dim;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+    }
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: $cinema-medium;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+
+    .achievement-title {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: $cinema-text;
+    }
+
+    .achievement-desc {
+        font-size: 0.75rem;
+        color: $cinema-text-dim;
+    }
+}
+
+.story-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .story-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: $cinema-medium;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background: $cinema-light;
+        }
+
+        .story-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .story-status {
+            font-size: 0.75rem;
+            border-radius: 9999px;
+            padding: 0.25rem 0.5rem;
+
+            &.active {
+                background-color: rgba(34, 197, 94, 0.2);
+                color: #22c55e;
+            }
+
+            &.paused {
+                background-color: rgba(250, 204, 21, 0.2);
+                color: $cinema-accent;
+            }
+        }
+    }
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    .cinema-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .secondary-button {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid $cinema-accent;
+        color: $cinema-accent;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+
+        &:hover {
+            background: $cinema-accent;
+            color: $cinema-black;
         }
     }
 }
