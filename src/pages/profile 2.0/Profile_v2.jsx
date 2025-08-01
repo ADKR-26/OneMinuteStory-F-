@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   User,
@@ -27,11 +27,13 @@ const ProfilePage = () => {
     (state) => state?.oneMinuteStory?.currentUser?.data
   );
   console.log("Current User:", currentUser);
+  const [image, setImage] = useState(undefined);
+  const fileRef = useRef(null);
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [formData, setFormData] = React.useState({
     username: currentUser.username || "NightScribe",
-    email: "nightscribe@example.com",
+    email: currentUser.email || "nightscribe@example.com",
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
@@ -112,7 +114,28 @@ const ProfilePage = () => {
             <div className="profile-header">
               <div className="relative">
                 <div className="avatar">
-                  <User className="avatar-icon" />
+                  {/* <input
+                    type="file"
+                    ref={fileRef}
+                    hidden
+                    accept="image/*"
+                    onChange={(e) =>
+                      setImage(e.target.files[0])
+                    }
+                  /> */}
+                  {currentUser.profilePicture ? (
+                    <img
+                      src={currentUser.profilePicture}
+                      alt="profile"
+                      className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2 hover-effect"
+                      onClick={() =>
+                        fileRef.current.click()
+                      }
+                    />
+                  ) : (
+                    <User className="avatar-icon" />
+                  )}
+                  
                 </div>
                 {isEditing && (
                   <button className="edit-button">
@@ -130,7 +153,10 @@ const ProfilePage = () => {
                       </label>
                       <input
                         type="text"
-                        value={currentUser.username || 'NightScribe'}
+                        value={
+                          currentUser.username ||
+                          "NightScribe"
+                        }
                         onChange={(e) =>
                           handleInputChange(
                             "username",
@@ -305,6 +331,7 @@ const ProfilePage = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8">
+        {/* <div className="disabled-div "> */}
           {/* Stats Panel */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

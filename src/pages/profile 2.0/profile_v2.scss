@@ -104,7 +104,7 @@ $cinema-text-dim: #a3a3a3;
         display: flex;
         align-items: center;
         // text-align: center;
-         padding-left: 0.75rem;
+        padding-left: 0.75rem;
         background-color: $cinema-medium;
         height: 2rem;
         width: 16rem;
@@ -166,7 +166,7 @@ $cinema-text-dim: #a3a3a3;
         display: flex;
         align-items: center;
         // text-align: center;
-         padding-left: 1.75rem;
+        padding-left: 1.75rem;
         background-color: $cinema-medium;
         height: 2rem;
         width: 16rem;
@@ -290,5 +290,12 @@ $cinema-text-dim: #a3a3a3;
             background: $cinema-accent;
             color: $cinema-black;
         }
+    }
+
+    .disabled-div {
+        pointer-events: none;
+        opacity: 1;
+        display: none;
+        user-select: none;
     }
 }
