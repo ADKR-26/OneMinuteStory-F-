@@ -108,6 +108,11 @@ function Header_v2() {
                 <span className="nav-label">Profile</span>
               </Link>
 
+              <Link to="/sign-in" className="nav-button">
+                <PenTool className="nav-icon" />
+                <span className="nav-label">Sign In</span>
+              </Link>
+
               {/* Mobile Search Toggle */}
               <button
                 className="mobile-search-toggle"
