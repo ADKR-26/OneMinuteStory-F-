@@ -32,8 +32,10 @@ function StoryFeed() {
   const currentUser = useSelector(
     (state) => state?.oneMinuteStory?.currentUser?.data
   );
-
+  console.warn("STORY FEED RENDERED", storyData);
+  console.warn("titleId", titleId);
   const specificStory = storyData?.find((item) => item?._id === titleId);
+  console.warn("specificStory", specificStory);
 
   useEffect(() => {
     const storyId = specificStory._id;
@@ -51,6 +53,7 @@ function StoryFeed() {
   },[image])
 
   const optionRender = (story) => {
+    console.log("Rendering story with option:", story, paraOption);
     if (paraOption) {
       return (
         <div className="storyFeed-paragraph">
@@ -93,11 +96,12 @@ function StoryFeed() {
     // console.info("Generating cover image for story:", specificStory.title);
     // console.info("Generating cover image...", specificStory);
     const storyId = specificStory._id;
-    const combinedStory = specificStory.story
+    const combinedStory = specificStory.scenes
       .map((item) => item.content)
       .join(" ");
     // await dispatch(generateCoverImage(combinedStory, storyId));
     const newImage = await generateCoverImage(combinedStory, storyId);
+    console.warn("combinedStory:", combinedStory);
     console.warn("Generated Image:", newImage);
 
     // const coverImageData = await getCoverImage(storyId);
@@ -165,7 +169,7 @@ function StoryFeed() {
               <img src={image} alt="Cover Image" />
             </div>
             <div className="story-container">
-              {optionRender(specificStory.story)}
+              {optionRender(specificStory.scenes)}
             </div>
 
             {currentUser?.email ? (

@@ -48,11 +48,11 @@ function AddStory({ titleData }) {
             // setTimerStarted(false);
             setIsTyping(false);
             resetData();
-            // console.log("EMAILLL", currentUser);
+            console.log("EMAILLL", currentUser);
             dispatch(
                 setStoryData(
-                    data?.title,
-                    data?.story,
+                    values?.title,
+                    values?.story,
                     currentUser?.email,
                     currentUser?.username
                 )
