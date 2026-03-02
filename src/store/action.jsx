@@ -136,9 +136,16 @@ export function setStoryData(title, story, email, username) {
       axios
         .post(`${url}/api/addStory`, {
           title,
-          story,
-          email,
-          author: username,
+          scenes: [
+            {
+              content: story,
+              author: {
+                userName: username
+              }
+            }
+          ],
+          creatorEmail: email,
+          creatorName: username,
         })
         .then((response) => {
           dispatch(actionSetStoryData(response));
