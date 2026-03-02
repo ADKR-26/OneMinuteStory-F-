@@ -1,4 +1,9 @@
 {
+    "buildCommand": "vite build",
+    "installCommand": "npm install",
+    "env": {
+        "NODE_VERSION": "24.x"
+    },
     "rewrites": [
         {
             "source": "/(.*)",
