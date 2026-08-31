@@ -9,6 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./routes/AppRouter";
 import Footer from "./components/footer/Footer";
 import { SocketProvider } from "./store/utils/SocketContext";
+import Header_v2 from "./components/header_v2/Header_v2";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <BrowserRouter>
         {/* <Provider store={store}> */}
         <Header />
+        {/* <Header_v2 /> */}
         {/* <AppRouter className="pt-20"/> */}
 
         <div className="pt-20">
