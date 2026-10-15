@@ -10,6 +10,7 @@ vi.mock("axios", () => ({
 
 beforeEach(() => {
   vi.clearAllMocks();
+  axios.get.mockResolvedValue({ data: [] });
 });
 
 describe("StoryCard", () => {

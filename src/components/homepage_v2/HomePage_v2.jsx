@@ -7,7 +7,7 @@ import { PenTool, Zap, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { Homepage } from "../../constants/storyConstants";
 
-import "./homepage_v2.scss";
+import "./homePage_v2.scss";
 
 function HomePage2() {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function HomePage2() {
     <section id="homepage-jsx">
       <div className="main-container">
         <div className="container">
-          <motion.p
+          <motion.div
             className="title"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ function HomePage2() {
                 </NavLink>
               </button>
             </div>
-          </motion.p>
+          </motion.div>
         </div>
 
         <div className="features">

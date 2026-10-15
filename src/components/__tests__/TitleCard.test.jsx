@@ -22,6 +22,7 @@ const loggedIn = (email) => ({ currentUser: { data: { email } } });
 
 beforeEach(() => {
   vi.clearAllMocks();
+  axios.get.mockResolvedValue({ data: [] });
 });
 
 describe("TitleCard", () => {

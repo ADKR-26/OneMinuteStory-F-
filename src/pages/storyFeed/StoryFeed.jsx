@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import AddStory from "../addStory/AddStory";
 import {
   generateStoryData,
@@ -8,11 +8,9 @@ import {
   generateCoverImage,
   getCoverImage
 } from "../../store/action";
-import { useDispatch } from "react-redux";
 
 import "./storyFeed.scss";
 import { Button, Switch } from "antd";
-import test_image from "../../assets/test_image.png";
 
 function StoryFeed() {
   const dispatch = useDispatch();
