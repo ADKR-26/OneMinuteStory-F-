@@ -23,13 +23,13 @@ jobs:
       # Step 2: Set up Node.js version 20 (redundant if using a Node container, but harmless)
       - uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Specify the Node.js version
+          node-version: '24'  # Specify the Node.js version
 
       # Step 3: Install dependencies using npm in CI mode
       - run: npm ci
 
       # Step 4 (optional): Run tests (uncomment to enable)
-      # - run: npm run test   # for testing
+      - run: npm run test   # for testing
 
       # Step 5: Build the application
       - run: npm run build
