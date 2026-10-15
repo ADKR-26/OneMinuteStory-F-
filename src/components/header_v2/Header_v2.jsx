@@ -1,11 +1,7 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import OMS from "../../assets/OMS.png";
-import USER_PIC from "../../assets/user.png";
-import { useLocation } from "react-router-dom";
 import {
-  Film,
   Home,
   User,
   PenTool,
